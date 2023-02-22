@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"
+      integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+  </head>
+  <body>
+    <button id="getListUser">get list user</button>
+    <form>
+      user name <input type="text" id="user_name" />
+      <br />
+      password <input type="text" id="password" />
+      <button type="button" id="login-btn">Login</button>
+    </form>
+    <br />
+
+    <form>
+      user name <input type="text" id="user_name" />
+      <br />
+      password <input type="text" id="password" />
+      <button type="button">Register</button>
+    </form>
+    <script>
+      $(document).ready(function () {
+        $("#getListUser").click(() => {
+          $.ajax({
+            type: "GET",
+            url: "http://localhost:9090/api/user/list",
+            beforeSend: function (request) {
+              request.setRequestHeader("token", localStorage.getItem("token"));
+            },
+            success: function (data) {
+              console.log(data);
+            },
+            error: function (e) {
+              console.log(e);
+            },
+          });
+        });
+
+        $("#login-btn").click(function () {
+          let user_name = $("#user_name").val();
+          let password = $("#password").val();
+          console.log(user_name, password);
+          $.ajax({
+            type: "POST",
+            url: "http://localhost:9090/api/user/login",
+            data: { user_name, password },
+            success: function (data) {
+              localStorage.setItem("token", data.token);
+              console.log(data);
+            },
+            error: function (e) {
+              console.log(e);
+            },
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

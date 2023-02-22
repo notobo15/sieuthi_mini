@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"
+      integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+  </head>
+  <body>
+    <form>
+      user name <input type="text" id="user_name" />
+      <br />
+      password <input type="text" id="password" />
+      <br />
+      phone <input type="text" id="phone" />
+      <br />
+      <button type="button" id="register-btn">Register</button>
+    </form>
+    <script>
+      $(document).ready(function () {
+        $("#register-btn").click(function () {
+          let user_name = $("#user_name").val();
+          let password = $("#password").val();
+          let phone = $("#phone").val();
+          console.log(user_name, password, phone);
+          $.ajax({
+            type: "POST",
+            url: "http://localhost:9090/api/user/register",
+            data: { user_name, password, phone },
+            success: function (data) {
+              localStorage.setItem("token", data.token);
+              console.log(data);
+              console.log("thanh cong");
+            },
+            error: function (e) {
+              if (e.status === 400) {
+                console.log("ban chua dien du thong tin");
+              } else if (e.status === 409) {
+                console.log("tai khoan da ton tai");
+              }
+            },
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
