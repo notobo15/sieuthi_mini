@@ -18,7 +18,16 @@ app.use(express.json());
 config(app);
 
 const authRoute = require("./routes/authRoute");
+const productRoute = require("./routes/productRoute");
+const categoryRoute = require("./routes/categoryRoute");
+const { errorHandler, notFound } = require("./middlewares/Handlers");
+
 app.use("/api/user", authRoute);
+app.use("/api/product", productRoute);
+app.use("/api/category", categoryRoute);
+app.use("/api/category", categoryRoute);
+app.use(errorHandler);
+app.use(notFound);
 const port = 9090;
 pool.getConnection(async (err, con) => {
   if (err) {

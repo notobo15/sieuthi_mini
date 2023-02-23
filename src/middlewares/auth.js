@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 
-const verifyToken = (req, res, next) => {
+const auth = (req, res, next) => {
   const token = req.body.token || req.query.token || req.headers["token"];
 
   if (!token) {
@@ -15,5 +15,13 @@ const verifyToken = (req, res, next) => {
   }
   return next();
 };
-
-module.exports = verifyToken;
+const authAdmin = async (req, res, next) => {
+  const { user_name } = req.user;
+  const adminUser = await User.findOne({ email });
+  if (adminUser.role !== "admin") {
+    throw new Error("You are not an admin");
+  } else {
+    next();
+  }
+};
+module.exports = { auth, authAdmin };
