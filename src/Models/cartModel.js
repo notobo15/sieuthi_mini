@@ -1,21 +1,7 @@
 const connectDB = require("../config/connectDB");
 const pool = connectDB();
-const bcrypt = require("bcrypt");
-const userModel = function (data) {
-  this.user_id = data.user_id;
-  this.user_name = data.user_name;
-  this.password = data.password;
-  this.first_name = data.first_name;
-  this.last_name = data.last_name;
-  this.phone = data.phone;
-  this.birth_date = data.birth_date;
-  this.address = data.address;
-  this.gender = data.gender;
-  this.delivery_address = data.delivery_address;
-  this.status = data.status;
-  this.createAt = data.createAt;
-};
-userModel.find = async () => {
+const cartModel = function (data) {};
+cartModel.find = async () => {
   return new Promise((resolve, reject) => {
     pool.getConnection((err, connection) => {
       if (err) throw err;
@@ -27,7 +13,27 @@ userModel.find = async () => {
     });
   });
 };
-userModel.findOne = async (data) => {
+cartModel.findByIdUser = async (user_id) => {
+  return new Promise((resolve, reject) => {
+    pool.getConnection((err, connection) => {
+      if (err) throw err;
+      connection.query(
+        `SELECT T1.cart_id ,T1.product_id, T1.quantity, T2.name, T2.price, T3.image_name FROM cart T1
+        JOIN product T2 ON T1.product_id = T2.product_id
+        JOIN product_image T3 ON T3.product_id = T1.product_id
+        where user_id = ? and T3.primary_img = 1`,
+        [user_id],
+        (err, rows) => {
+          connection.release(); // return the connection to pool
+          if (err) throw err;
+          resolve(rows);
+        }
+      );
+    });
+  });
+};
+
+cartModel.findOne = async (data) => {
   let key = Object.keys(data)[0];
   return new Promise((resolve, reject) => {
     pool.getConnection((err, connection) => {
@@ -49,7 +55,7 @@ userModel.findOne = async (data) => {
   });
 };
 
-userModel.findById = async (id) => {
+cartModel.findById = async (id) => {
   return new Promise((resolve, reject) => {
     pool.getConnection((err, connection) => {
       if (err) throw err;
@@ -70,18 +76,12 @@ userModel.findById = async (id) => {
   });
 };
 
-userModel.findByIdAndUpdate = async (id, newData) => {
-  // let key = Object.keys(data)[0];
-  console.log(newData);
-  let str = Object.keys(newData)
-    .map((key) => `${key}='${newData[key]}'`)
-    .join(", ");
-  console.log(str);
+cartModel.findByIdAndUpdate = async (id, newData) => {
   return new Promise((resolve, reject) => {
     pool.getConnection((err, connection) => {
       if (err) throw err;
       connection.query(
-        `UPDATE user SET ${str} where user_id= ${id}`,
+        `UPDATE cart SET quantity = quantity + ${newData.quantity} where user_id= ${id}`,
         (err, rows) => {
           connection.release(); // return the connection to pool
           if (err) throw err;
@@ -96,13 +96,13 @@ userModel.findByIdAndUpdate = async (id, newData) => {
     });
   });
 };
-userModel.findByIdAndDelete = async (id) => {
+cartModel.findByIdAndDelete = async (id) => {
   // let key = Object.keys(data)[0];
   return new Promise((resolve, reject) => {
     pool.getConnection((err, connection) => {
       if (err) throw err;
       connection.query(
-        `DELETE FROM user where user_id= ?`,
+        `DELETE FROM cart where cart_id= ?`,
         [id],
         (err, rows) => {
           connection.release(); // return the connection to pool
@@ -118,10 +118,7 @@ userModel.findByIdAndDelete = async (id) => {
     });
   });
 };
-userModel.create = async (data) => {
-  const salt = bcrypt.genSaltSync(10);
-  data.password = await bcrypt.hash(data.password, salt);
-  console.log(data);
+cartModel.create = (data) => {
   let keys = Object.keys(data).join(", ");
   let values = Object.values(data).join("', '");
 
@@ -131,10 +128,10 @@ userModel.create = async (data) => {
       connection.query(
         `INSERT INTO user(${keys}) values ('${values}');`,
         (err, rows) => {
+          if (err) throw err;
           console.log(rows);
           console.log(err);
           connection.release(); // return the connection to pool
-          if (err) throw err;
           rows.message = "success";
           resolve(rows);
         }
@@ -142,9 +139,66 @@ userModel.create = async (data) => {
     });
   });
 };
-module.exports = userModel;
+
+cartModel.createCart = async (user_id, data) => {
+  return new Promise((resolve, reject) => {
+    pool.getConnection((err, connection) => {
+      if (err) throw err;
+      connection.query(
+        `SELECT * FROM cart where user_id = ? and product_id = ?`,
+        [user_id, data.product_id],
+        (err, rows) => {
+          if (err) throw err;
+          console.log(rows);
+          if (rows.length !== 0) {
+            connection.query(
+              `UPDATE cart SET quantity = quantity + ? where user_id = ? and product_id = ? ;`,
+              [data.quantity, user_id, data.product_id],
+              (err, rows) => {
+                if (err) throw err;
+                console.log(rows);
+                connection.release(); // return the connection to pool
+                rows.message = "success";
+                resolve(rows);
+              }
+            );
+          } else {
+            connection.query(
+              `INSERT INTO cart(user_id, quantity, product_id) values ('${user_id}', '${data.quantity}', '${data.product_id}');`,
+              (err, rows2) => {
+                if (err) throw err;
+                console.log(rows2);
+                connection.release(); // return the connection to pool
+                rows.message = "success";
+                resolve(rows);
+              }
+            );
+          }
+          connection.release(); // return the connection to pool
+        }
+      );
+    });
+  });
+};
+
+cartModel.emptyCartUser = async (user_id) => {
+  return new Promise((resolve, reject) => {
+    pool.getConnection((err, connection) => {
+      if (err) throw err;
+      connection.query(`DELETE FROM cart where user_id = ?`, (err, rows) => {
+        if (err) throw err;
+        console.log(rows);
+        console.log(err);
+        connection.release(); // return the connection to pool
+        rows.message = "success";
+        resolve(rows);
+      });
+    });
+  });
+};
+module.exports = cartModel;
 // (async () => {
-//   let user = await userModel.findByIdAndUpdate(
+//   let user = await cartModel.findByIdAndUpdate(
 //     { user_id: 18 },
 //     { phone: "1234567890", address: "HCM", gender: "nam" }
 //   );

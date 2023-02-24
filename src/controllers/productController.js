@@ -32,23 +32,35 @@ const create = async (req, res) => {
 };
 
 const getList = async (req, res) => {
-  const query = `SELECT * FROM product T1 
+  const query = `SELECT T1.*, T2.* FROM product T1 
   JOIN product_image T2 ON T1.product_id = T2.product_id
   WHERE T2.primary_img = 1;`;
   pool.query(query, (err, data) => {
     if (err) throw new Error(err);
-    console.log(data);
+    // console.log(data);
     return res.send(data);
   });
 };
 const getSingle = async (req, res) => {
   const { id } = req.params;
   console.log(id);
-  const query = "SELECT * FROM `product` WHERE slug = ?";
+  const query = `SELECT * FROM product T1 JOIN product_image T2
+            ON T1.product_id = T2.product_id  WHERE T1.product_id = ?`;
   pool.query(query, [id], (err, data) => {
     if (err) throw new Error(err);
     console.log(data);
-    return res.send(data);
+    let result = data[0];
+    let arrImg = [];
+    data.forEach((item) => {
+      if (item.primary_img) {
+        result.primary_img = result.primary_img;
+      }
+      arrImg.push(item.image_name);
+    });
+    result.arrImg = arrImg;
+
+    console.log(result);
+    return res.send(result);
   });
 };
 const editSingle = async (req, res) => {};

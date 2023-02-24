@@ -26,7 +26,7 @@ app.use("/api/user", authRoute);
 app.use("/api/product", productRoute);
 app.use("/api/category", categoryRoute);
 app.use("/api/category", categoryRoute);
-app.use(errorHandler);
+// app.use(errorHandler);
 app.use(notFound);
 const port = 9090;
 pool.getConnection(async (err, con) => {

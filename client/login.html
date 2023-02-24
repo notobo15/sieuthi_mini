@@ -13,37 +13,33 @@
     ></script>
   </head>
   <body>
-    <h1>Register</h1>
+    <h1>login</h1>
     <form>
       user name <input type="text" id="user_name" />
       <br />
       password <input type="text" id="password" />
       <br />
-      phone <input type="text" id="phone" />
-      <br />
-      <button type="button" id="register-btn">Register</button>
+      <button type="button" id="login-btn">Login</button>
     </form>
     <script>
       $(document).ready(function () {
-        $("#register-btn").click(function () {
+        $("#login-btn").click(function () {
           let user_name = $("#user_name").val();
           let password = $("#password").val();
-          let phone = $("#phone").val();
-          console.log(user_name, password, phone);
           $.ajax({
             type: "POST",
-            url: "http://localhost:9090/api/user/register",
-            data: { user_name, password, phone },
+            url: "http://localhost:9090/api/user/login",
+            data: { user_name, password },
             success: function (data) {
               localStorage.setItem("token", data.token);
-              console.log(data);
-              console.log("thanh cong");
+              alert("dang nhap thanh cong");
+              window.location.assign("index.html");
             },
             error: function (e) {
               if (e.status === 400) {
-                console.log("ban chua dien du thong tin");
+                alert("ban chua dien du thong tin");
               } else if (e.status === 409) {
-                console.log("tai khoan da ton tai");
+                alert("tai khoan da ton tai");
               }
             },
           });
