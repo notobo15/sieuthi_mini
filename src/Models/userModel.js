@@ -72,7 +72,6 @@ userModel.findById = async (id) => {
 
 userModel.findByIdAndUpdate = async (id, newData) => {
   // let key = Object.keys(data)[0];
-  console.log(newData);
   let str = Object.keys(newData)
     .map((key) => `${key}='${newData[key]}'`)
     .join(", ");

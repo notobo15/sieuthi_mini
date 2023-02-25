@@ -1,11 +1,11 @@
 const connectDB = require("../config/connectDB");
 const pool = connectDB();
-function categoryModel() {}
-categoryModel.find = async () => {
+function suppilierModel() {}
+suppilierModel.find = async () => {
   return new Promise((resolve, reject) => {
     pool.getConnection((err, connnection) => {
       if (err) throw err;
-      connnection.query("SELECT * FROM category_product", (err, data) => {
+      connnection.query("SELECT * FROM suppilier", (err, data) => {
         if (err) throw err;
         if (data.affectedRows !== 0) {
           resolve(data);
@@ -18,12 +18,12 @@ categoryModel.find = async () => {
   });
 };
 
-categoryModel.findById = async (id) => {
+suppilierModel.findById = async (id) => {
   return new Promise((resolve, reject) => {
     pool.getConnection((err, connection) => {
       if (err) throw err;
       connection.query(
-        `SELECT * FROM category_product where category_id = ?`,
+        `SELECT * FROM suppilier where suppilier_id = ?`,
         [id],
         (err, rows) => {
           connection.release(); // return the connection to pool
@@ -38,7 +38,7 @@ categoryModel.findById = async (id) => {
     });
   });
 };
-categoryModel.findByIdAndUpdate = async (id, newData) => {
+suppilierModel.findByIdAndUpdate = async (id, newData) => {
   let str = Object.keys(newData)
     .map((key) => `${key}='${newData[key]}'`)
     .join(", ");
@@ -46,7 +46,7 @@ categoryModel.findByIdAndUpdate = async (id, newData) => {
     pool.getConnection((err, connection) => {
       if (err) throw err;
       connection.query(
-        `UPDATE category_product SET ${str} where category_id= ${id}`,
+        `UPDATE suppilier SET ${str} where suppilier_id= ${id}`,
         (err, rows) => {
           connection.release(); // return the connection to pool
           if (err) throw err;
@@ -61,13 +61,13 @@ categoryModel.findByIdAndUpdate = async (id, newData) => {
     });
   });
 };
-categoryModel.findByIdAndDelete = async (id) => {
+suppilierModel.findByIdAndDelete = async (id) => {
   // let key = Object.keys(data)[0];
   return new Promise((resolve, reject) => {
     pool.getConnection((err, connection) => {
       if (err) throw err;
       connection.query(
-        `DELETE FROM category_product where category_id = ?`,
+        `DELETE FROM suppilier where suppilier_id = ?`,
         [id],
         (err, rows) => {
           connection.release(); // return the connection to pool
@@ -83,13 +83,13 @@ categoryModel.findByIdAndDelete = async (id) => {
     });
   });
 };
-categoryModel.create = (data) => {
+suppilierModel.create = (data) => {
   let keys = Object.keys(data)[0];
   return new Promise((resolve, reject) => {
     pool.getConnection((err, connection) => {
       if (err) throw err;
       connection.query(
-        `INSERT INTO category_product(${keys}) values ('${data[keys]}');`,
+        `INSERT INTO suppilier(${keys}) values ('${data[keys]}');`,
         (err, rows) => {
           if (err) throw err;
           connection.release(); // return the connection to pool
@@ -104,4 +104,4 @@ categoryModel.create = (data) => {
     });
   });
 };
-module.exports = categoryModel;
+module.exports = suppilierModel;
