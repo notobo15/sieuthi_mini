@@ -3,7 +3,7 @@ const userController = require("../controllers/userController");
 const router = express.Router();
 const { auth } = require("../middlewares/auth");
 router.get("/list", auth, userController.getListUser);
-router.get("/cart", auth, userController.getListCart); // get danh sach gio hang
+router.get("/cart/list", auth, userController.getListCart); // get danh sach gio hang
 router.get("/order/list", auth, userController.getListOrder); // get danh sach don dat hang
 
 router.get("/logout", userController.logoutUser);

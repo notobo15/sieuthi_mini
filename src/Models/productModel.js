@@ -5,11 +5,20 @@ productModel.find = async () => {
   return new Promise((resolve, reject) => {
     pool.getConnection((err, connection) => {
       if (err) throw err;
-      connection.query("SELECT * FROM`product`", (err, rows) => {
-        connection.release(); // return the connection to pool
-        if (err) throw err;
-        resolve(rows);
-      });
+      connection.query(
+        `SELECT T1.*, T2.* FROM product T1 
+      JOIN product_image T2 ON T1.product_id = T2.product_id
+      WHERE T2.primary_img = 1;`,
+        (err, rows) => {
+          connection.release(); // return the connection to pool
+          if (err) throw err;
+          if (rows.length !== 0) {
+            resolve(rows);
+          } else {
+            resolve([]);
+          }
+        }
+      );
     });
   });
 };
@@ -82,13 +91,21 @@ productModel.findById = async (id) => {
     pool.getConnection((err, connection) => {
       if (err) throw err;
       connection.query(
-        `SELECT * FROM product where product_id= ?`,
+        `SELECT T1.*, T2.image_name FROM product T1 JOIN product_image T2
+        ON T1.product_id = T2.product_id WHERE T1.product_id = ?`,
         [id],
         (err, rows) => {
           connection.release(); // return the connection to pool
           if (err) throw err;
           if (rows.length !== 0) {
-            resolve(rows[0]);
+            let result = rows[0];
+            let arrImg = [];
+            rows.forEach((item) => {
+              arrImg.push(item.image_name);
+            });
+            result.arrImg = arrImg;
+
+            resolve(result);
           } else {
             resolve({ message: "not found" });
           }
@@ -127,7 +144,7 @@ productModel.findByIdAndDelete = async (id) => {
     pool.getConnection((err, connection) => {
       if (err) throw err;
       connection.query(
-        `DELETE FROM product where product_id= ?`,
+        `DELETE FROM product where product_id = ?`,
         [id],
         (err, rows) => {
           connection.release(); // return the connection to pool
@@ -143,14 +160,21 @@ productModel.findByIdAndDelete = async (id) => {
     });
   });
 };
-productModel.create = (data) => {
+
+const slugify = require("slugify");
+productModel.create = async (data) => {
+  const slug = await slugify(data["name"], {
+    lower: true, // convert to lower case, defaults to `false`
+    locale: "vi", // language code of the locale to use
+    trim: true, // trim leading and trailing replacement chars, defaults to `true`
+  });
   let keys = Object.keys(data).join(", ");
   let values = Object.values(data).join("', '");
   return new Promise((resolve, reject) => {
     pool.getConnection((err, connection) => {
       if (err) throw err;
       connection.query(
-        `INSERT INTO product(${keys}) values ('${values}');`,
+        `INSERT INTO product(slug, ${keys}) values ('${slug}', '${values}');`,
         (err, rows) => {
           if (err) throw err;
           connection.release(); // return the connection to pool
