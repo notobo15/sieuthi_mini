@@ -54,7 +54,7 @@ userModel.findById = async (id) => {
     pool.getConnection((err, connection) => {
       if (err) throw err;
       connection.query(
-        `SELECT * FROM user where user_id= ?`,
+        `SELECT * FROM user where user_id = ?`,
         [id],
         (err, rows) => {
           connection.release(); // return the connection to pool
@@ -80,7 +80,7 @@ userModel.findByIdAndUpdate = async (id, newData) => {
     pool.getConnection((err, connection) => {
       if (err) throw err;
       connection.query(
-        `UPDATE user SET ${str} where user_id= ${id}`,
+        `UPDATE user SET ${str} where user_id = ${id}`,
         (err, rows) => {
           connection.release(); // return the connection to pool
           if (err) throw err;

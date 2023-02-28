@@ -2,6 +2,7 @@ const express = require("express");
 const config = require("./config/viewEngine");
 const cors = require("cors");
 const connectDB = require("./config/connectDB");
+const fs = require("fs");
 const initWebRoute = require("./routes/initWebRoute");
 const { errorHandler, notFound } = require("./middlewares/Handlers");
 require("dotenv").config();
@@ -22,6 +23,13 @@ config(app);
 
 initWebRoute(app);
 // app.use(errorHandler);
+console.log(__dirname);
+app.get("/", (req, res) => {
+  fs.readFile(__dirname + "/public/views/index.html", "utf8", (err, text) => {
+    res.send(text);
+  });
+});
+
 app.use(notFound);
 const port = 9090;
 pool.getConnection(async (err, con) => {

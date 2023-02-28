@@ -5,7 +5,7 @@ permissionModel.find = async (user_name) => {
   return new Promise((resolve, reject) => {
     pool.getConnection((err, connnection) => {
       if (err) throw err;
-      let q = `SELECT T5.per_id, T5.name
+      let q = `SELECT T5.per_id,  T5.code_name
       FROM USER T1 
       JOIN groups T3 ON T1.group_id = T3.group_id 
       JOIN group_permission T4 ON T3.group_id = T4.group_id

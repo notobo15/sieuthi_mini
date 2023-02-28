@@ -45,23 +45,92 @@
               <a class="nav-link" href="#">Home</a>
             </li>
             <li class="nav-item active">
-              <a class="nav-link" href="#">Login</a>
+              <a class="nav-link login" href="login.html">Login</a>
             </li>
             <li class="nav-item active">
-              <a class="nav-link" href="#">Register</a>
+              <a class="nav-link" href="register.html">Register</a>
             </li>
           </ul>
-          <form class="form-inline my-2 my-lg-0">
-            <input
-              class="form-control mr-sm-2"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-            />
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
-              Search
-            </button>
-          </form>
+          <button
+            type="button"
+            class="btn btn-primary btn-open-cart"
+            data-toggle="modal"
+            data-target="#exampleModal"
+          >
+            Cart
+          </button>
+          <!-- Modal -->
+          <div
+            class="modal fade"
+            id="exampleModal"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">
+                    Modal title
+                  </h5>
+                  <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body modal-cart"></div>
+                <script>
+                  $(".btn-open-cart").click(function () {
+                    $.ajax({
+                      method: "GET",
+                      url: "http://localhost:9090/api/user/cart/list",
+                      beforeSend: function (request) {
+                        request.setRequestHeader(
+                          "token",
+                          localStorage.getItem("token")
+                        );
+                      },
+                      success: function (data) {
+                        let htmlCart = "";
+                        data.forEach((item) => {
+                          htmlCart += `
+                          <div class="d-flex justify-content-center">
+                            <img
+                            style="width:100px;height:auto;"
+                              src="http://localhost:9090/img/products/${item.img}"
+                              class="card-img-top"
+                              
+                            />
+                            <p>${item.name}</p>
+                              <p>${item.quantity}</p>
+                          </div>`;
+                        });
+                        $(".modal-cart").html(htmlCart);
+                        console.log(data);
+                      },
+                    });
+                  });
+                </script>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                  <button type="button" class="btn btn-primary">
+                    Save changes
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </nav>
     </div>
@@ -104,10 +173,10 @@
             html = "";
             data.forEach((item) => {
               html += `
-              <div class="col ">
+              <div class="col">
                 <div class="card" >
               <div class="card-body" data="${item.product_id}" data-toggle="modal" data-target="#exampleModal" >
-                <img src="http://localhost:9090/img/products/${item.image_name}" class="card-img-top" alt="..." />
+                <img src="http://localhost:9090/img/products/${item.img}" class="card-img-top" alt="..." />
                 <h5 class="card-title">${item.name}</h5>
                 <p class="card-text" style=" overflow: hidden;
                     display: -webkit-box;
@@ -117,10 +186,11 @@
                 </p>
                 <p class="card-text">
                   ${item.price}
-                </p>  
+                </p>
               </div>
               <div class ="card-footer">
-                  <button data=${item.product_id} class="btn btn-primary add-wishlist-btn"><a href="http://localhost:9090/api/product/${item.product_id}">Mua Ngay</a></button>
+                  <button data=${item.product_id} class="btn btn-primary add-wishlist-btn">Mua Ngay</button>
+
               </div>
                 </div>
               </div>`;
@@ -138,7 +208,7 @@
                   console.log("data", data);
                   let htmls = `<div class="modal-content">
                       <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">
+                        <h5 class="modal-title" id="exampleModalLabel" class="close" data-dismiss="modal" aria-label="Close">
                           ${data.name}
                         </h5>
                         <button type="button" class="close">
@@ -167,7 +237,29 @@
               });
             });
             $(".add-wishlist-btn").click(function () {
-              console.log($(this).attr("data"));
+              let product_id = $(this).attr("data");
+              console.log();
+              $.ajax({
+                type: "POST",
+                url: "http://localhost:9090/api/user/cart",
+                beforeSend: function (request) {
+                  request.setRequestHeader(
+                    "token",
+                    localStorage.getItem("token")
+                  );
+                },
+                data: { product_id, quantity: 1 },
+                success: function (data) {
+                  console.log(data);
+                },
+                error: function (e) {
+                  if (e.status === 400) {
+                    alert("ban chua dien du thong tin");
+                  } else if (e.status === 409) {
+                    alert("tai khoan da ton tai");
+                  }
+                },
+              });
             });
           },
           error: function (e) {},

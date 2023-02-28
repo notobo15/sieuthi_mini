@@ -1,25 +1,25 @@
 const express = require("express");
-const userController = require("../controllers/userController");
+const userCtrl = require("../controllers/userController");
 const router = express.Router();
-const { auth } = require("../middlewares/auth");
-router.get("/list", auth, userController.getListUser);
-router.get("/cart/list", auth, userController.getListCart); // get danh sach gio hang
-router.get("/order/list", auth, userController.getListOrder); // get danh sach don dat hang
+const { auth, checkPermission } = require("../middlewares/auth");
+router.get("/list", auth, checkPermission, userCtrl.getListUser);
+router.get("/cart/list", auth, userCtrl.getListCart); // get danh sach gio hang
+router.get("/order/list", auth, userCtrl.getListOrder); // get danh sach don dat hang
+router.post("/myself", auth, checkPermission, userCtrl.updateMyself);
+router.get("/logout", userCtrl.logoutUser);
 
-router.get("/logout", userController.logoutUser);
+router.post("/login", userCtrl.loginUser);
+router.post("/register", userCtrl.createUser);
+router.get("/:id", auth, checkPermission, userCtrl.getSingleUser);
+router.post("/edit", auth, checkPermission, userCtrl.EditUser);
+router.post("/delete/:user_id", checkPermission, auth, userCtrl.deleteUser);
 
-router.post("/login", userController.loginUser);
-router.post("/register", userController.createUser);
-router.get("/:id", auth, userController.getSingleUser);
-router.post("/edit", auth, userController.EditUser);
-router.post("/delete/:user_id", auth, userController.deleteUser);
+router.post("/cart", auth, checkPermission, userCtrl.createCart); // them vao gio hang
+router.post("/cart/delete/:id", auth, checkPermission, userCtrl.deleteCart); // xoa san pham trong gio hang
+router.post("/cart/:id", auth, checkPermission, userCtrl.editCart); // edit quantity san pham
+router.post("/empty-cart", auth, checkPermission, userCtrl.emptyCart); // xoa tat ca san pham trong gio hang
 
-router.post("/cart", auth, userController.createCart); // them vao gio hang
-router.post("/cart/delete/:id", auth, userController.deleteCart); // xoa san pham trong gio hang
-router.post("/cart/:id", auth, userController.editCart); // edit quantity san pham
-router.post("/empty-cart", auth, userController.emptyCart); // xoa tat ca san pham trong gio hang
-
-router.post("/order", auth, userController.createOrder); // tao don hang
-router.post("/order/edit/:order_id", auth, userController.editOrder); // edit trang thai don hang
+router.post("/order", auth, checkPermission, userCtrl.createOrder); // tao don hang
+router.post("/order/edit/:order_id", auth, checkPermission, userCtrl.editOrder); // edit trang thai don hang
 
 module.exports = router;

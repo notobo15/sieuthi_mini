@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-
+const userModel = require("../Models/userModel");
 const auth = (req, res, next) => {
   const token = req.body.token || req.query.token || req.headers["token"];
 
@@ -15,13 +15,27 @@ const auth = (req, res, next) => {
   }
   return next();
 };
-const authAdmin = async (req, res, next) => {
-  const { user_name } = req.user;
-  const adminUser = await User.findOne({ email });
+const isAdmin = async (req, res, next) => {
+  const { group_id, user_id } = req.user;
+  const adminUser = await userModel.findById(user_id);
+
   if (adminUser.role !== "admin") {
     throw new Error("You are not an admin");
   } else {
     next();
   }
 };
-module.exports = { auth, authAdmin };
+const checkPermission = async (req, res, next) => {
+  let permissions = await req.user.permissions;
+  console.log(req.originalUrl);
+  console.log(permissions);
+  let isPer = permissions.some((item) => {
+    return req.originalUrl.includes(item.code_name);
+  });
+  if (isPer) {
+    await next();
+  } else {
+    res.json("Invalid Permisstion");
+  }
+};
+module.exports = { auth, isAdmin, checkPermission };

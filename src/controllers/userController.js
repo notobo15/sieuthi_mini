@@ -25,23 +25,22 @@ const loginUser = async (req, res) => {
   console.log("user", user);
   if (user) {
     const isMatched = await bcrypt.compare(password, user.password);
-    let per = await permissionModel.find(user_name);
-    console.log(per);
+    let permissions = await permissionModel.find(user_name);
 
     if (isMatched) {
       const token = jwt.sign(
         {
-          permissions: per,
           user_id: user.user_id,
           user_name: user_name,
-          password,
+          permissions,
         },
         process.env.TOKEN_KEY,
         {
           expiresIn: "24h",
         }
       );
-      // save user token
+      user.permissions = permissions;
+
       user.token = token;
       res.status(200).json(user);
     } else {
@@ -134,6 +133,11 @@ const editOrder = async (req, res) => {
   console.log(order);
   return res.json(order);
 };
+const updateMyself = async (req, res) => {
+  const { user_id } = req.user;
+  const user = await userModel.findByIdAndUpdate(user_id, req.body);
+  return res.json(user);
+};
 module.exports = {
   getListUser,
   loginUser,
@@ -150,4 +154,5 @@ module.exports = {
   getListOrder,
   createOrder,
   editOrder,
+  updateMyself,
 };
