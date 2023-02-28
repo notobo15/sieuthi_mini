@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"
+      integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+      integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <h1>import product</h1>
+    <div class="container">
+      <form>
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label for="inputState">Warehouse</label>
+            <select id="warehouse" class="form-control">
+              <option selected>Choose...</option>
+              <option>...</option>
+            </select>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="inputState">Suppilier</label>
+            <select id="suppilier" class="form-control">
+              <option selected>Choose...</option>
+              <option>...</option>
+            </select>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="inputZip">Zip</label>
+            <input type="text" class="form-control" id="inputZip" />
+          </div>
+        </div>
+        <div class="main">
+      </div> 
+        <div class="form-row d-flex justify-content-center">
+          <div class="btn btn-primary btn-add-product">+</div>
+        </div>
+      </div>
+        <button type="submit" class="btn btn-primary">Sign in</button>
+      </form>
+    </div>
+    <script >
+      function doAlert(e) {
+        if(confirm("ban co ban muon xoa")) {
+              $(e).parent().parent().remove()
+            }
+      }
+      $(document).ready(function () {
+
+        $.ajax({
+          method: "GET",
+          url: "http://localhost:9090/api/suppilier/list",
+          success: (data) => {
+            let htmlsuppilier = "";
+            data.forEach((item) => {
+              htmlsuppilier += `<option>${item.name}</option>`;
+            });
+            console.log(htmlsuppilier);
+            $("#suppilier").html(htmlsuppilier);
+          },
+        });
+        $.ajax({
+          method: "GET",
+          url: "http://localhost:9090/api/warehouse/list",
+          success: (data) => {
+            console.log("warehouse", data);
+            let htmlWarehouse = "";
+            data.forEach((item) => {
+              htmlWarehouse += `<option>${item.name}</option>`;
+            });
+            console.log(htmlWarehouse);
+            $("#warehouse").html(htmlWarehouse);
+          },
+        });
+        $(".btn-add-product").click(function() {
+          $.ajax({
+          method: "GET",
+          url: "http://localhost:9090/api/product/list",
+          success: (data) => {
+            let products = "";
+            data.forEach((item) => {
+              products += `<option>${item.product_id} : ${item.name}</option>`;
+            });
+            console.log(products);
+            $(".select-product").html(products);
+          },
+        });
+          $(".main").append(`
+          <div class="form-row">
+            <div class="form-group col-md-2">
+              <label for="inputZip">ID</label>
+              <input type="text" class="form-control" id="inputZip" />
+            </div>
+            <div class="form-group col-md-7">
+              <label for="inputZip">Name</label>
+              <select id="" class="form-control select-product">
+            </select>
+            </div>
+            <div class="form-group col-md-2">
+              <label for="inputZip">Quantity</label>
+              <input type="text" class="form-control" id="inputZip" />
+            </div>
+            <div class="form-group col-md-1 d-flex justify-content-end align-items-end">
+              <div class="btn btn-danger btn-delete" onclick="doAlert(this)">X</div>
+            </div>
+          </div>`)
+          
+        })
+        $("#login-btn").click(function () {
+          let user_name = $("#user_name").val();
+          let password = $("#password").val();
+          $.ajax({
+            type: "POST",
+            url: "http://localhost:9090/api/user/login",
+            data: { user_name, password },
+            success: function (data) {
+              localStorage.setItem("token", data.token);
+              alert("dang nhap thanh cong");
+              window.location.assign("index.html");
+            },
+            error: function (e) {
+              if (e.status === 400) {
+                alert("ban chua dien du thong tin");
+              } else if (e.status === 409) {
+                alert("tai khoan da ton tai");
+              }
+            },
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -1,8 +1,11 @@
 const express = require("express");
 const config = require("./config/viewEngine");
 const cors = require("cors");
-require("dotenv").config();
 const connectDB = require("./config/connectDB");
+const initWebRoute = require("./routes/initWebRoute");
+const { errorHandler, notFound } = require("./middlewares/Handlers");
+require("dotenv").config();
+
 const pool = connectDB();
 const app = express();
 
@@ -17,22 +20,7 @@ app.use(express.json());
 
 config(app);
 
-const authRoute = require("./routes/authRoute");
-const productRoute = require("./routes/productRoute");
-const categoryRoute = require("./routes/categoryRoute");
-const warehouseRoute = require("./routes/warehouseRoute");
-const suppilierRoute = require("./routes/suppilierRoute");
-const { errorHandler, notFound } = require("./middlewares/Handlers");
-
-// app.get("/", (req, res) => {
-//   res.render("index.html");
-// });
-
-app.use("/api/user", authRoute);
-app.use("/api/product", productRoute);
-app.use("/api/category", categoryRoute);
-app.use("/api/warehouse", warehouseRoute);
-app.use("/api/suppilier", suppilierRoute);
+initWebRoute(app);
 // app.use(errorHandler);
 app.use(notFound);
 const port = 9090;
@@ -53,4 +41,12 @@ pool.getConnection(async (err, con) => {
 JOIN user_per T2 ON T1.user_id = T2.user_id
 JOIN permission T3 ON T2.per_id = T3.per_id
 JOIN permission_detail T4 ON T3.per_id = T4.per_id
-WHERE T1.user_id = 1 */
+WHERE T1.user_id = 1 
+
+SELECT T5.per_id, T5.name
+FROM user T1 JOIN user_group T2 ON T1.user_id = T2.user_id
+JOIN `group` T3 ON T2.group_id = T3.group_id 
+JOIN group_permission T4 ON T3.group_id = T4.group_id
+JOIN permission T5 ON T4.permission_id = T5.per_id
+WHERE T5.per_id NOT IN (SELECT ex_user_group.permission_id FROM ex_user_group WHERE user_id = 1)
+*/

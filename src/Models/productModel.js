@@ -5,20 +5,15 @@ productModel.find = async () => {
   return new Promise((resolve, reject) => {
     pool.getConnection((err, connection) => {
       if (err) throw err;
-      connection.query(
-        `SELECT T1.*, T2.* FROM product T1 
-      JOIN product_image T2 ON T1.product_id = T2.product_id
-      WHERE T2.primary_img = 1;`,
-        (err, rows) => {
-          connection.release(); // return the connection to pool
-          if (err) throw err;
-          if (rows.length !== 0) {
-            resolve(rows);
-          } else {
-            resolve([]);
-          }
+      connection.query(`SELECT * FROM product`, (err, rows) => {
+        connection.release(); // return the connection to pool
+        if (err) throw err;
+        if (rows.length !== 0) {
+          resolve(rows);
+        } else {
+          resolve([]);
         }
-      );
+      });
     });
   });
 };
@@ -29,8 +24,7 @@ productModel.findByIdUser = async (user_id) => {
       connection.query(
         `SELECT T1.cart_id ,T1.product_id, T1.quantity, T2.name, T2.price, T3.image_name FROM cart T1
         JOIN product T2 ON T1.product_id = T2.product_id
-        JOIN product_image T3 ON T3.product_id = T1.product_id
-        where user_id = ? and T3.primary_img = 1`,
+        where user_id = ?`,
         [user_id],
         (err, rows) => {
           connection.release(); // return the connection to pool

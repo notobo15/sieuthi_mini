@@ -28,4 +28,6 @@ router.post(
 router.post("/edit/:id", auth, productController.editSingle);
 router.post("/delete/:id", auth, productController.deleteSingle);
 
+router.post("/import", productController.import_product);
+
 module.exports = router;

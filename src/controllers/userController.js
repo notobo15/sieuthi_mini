@@ -14,6 +14,7 @@ const getListUser = async (req, res) => {
     console.log(error);
   }
 };
+const permissionModel = require("../Models/permissionModel");
 const loginUser = async (req, res) => {
   let { user_name, password } = req.body;
   //user_name == "" || password == ""
@@ -24,9 +25,17 @@ const loginUser = async (req, res) => {
   console.log("user", user);
   if (user) {
     const isMatched = await bcrypt.compare(password, user.password);
+    let per = await permissionModel.find(user_name);
+    console.log(per);
+
     if (isMatched) {
       const token = jwt.sign(
-        { user_id: user.user_id, user_name: user_name, password },
+        {
+          permissions: per,
+          user_id: user.user_id,
+          user_name: user_name,
+          password,
+        },
         process.env.TOKEN_KEY,
         {
           expiresIn: "24h",
