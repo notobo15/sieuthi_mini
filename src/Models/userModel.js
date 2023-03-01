@@ -1,6 +1,6 @@
 const connectDB = require("../config/connectDB");
 const pool = connectDB();
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const userModel = function (data) {
   this.user_id = data.user_id;
   this.user_name = data.user_name;

@@ -1,0 +1,20 @@
+version: '3.8'
+services:
+  app:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    working_dir: /app
+    volumes:
+      - ./:/app
+    depends_on:
+      - mysql_server
+  mysql_server:
+    image: mysql:8.0
+    environment:
+      - MYSQL_DATABASE=sieuthi_mini
+      - MYSQL_USER=dan
+      - MYSQL_PASSWORD=secret
+      - MYSQL_ROOT_PASSWORD=secret

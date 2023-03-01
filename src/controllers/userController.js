@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const connectDB = require("../config/connectDB");
 const pool = connectDB();
 const userModel = require("../Models/userModel");
@@ -91,12 +91,11 @@ const deleteUser = async (req, res) => {
 };
 /// cart
 const getListCart = async (req, res) => {
-  console.log(req.user);
   const user = await cartModel.findByIdUser(req.user.user_id);
   return res.json(user);
 };
 const createCart = async (req, res) => {
-  if (!(req.body?.quantity && req.body?.product_id)) {
+  if (!(req.body?.quantity && req.body?.product_id && req.body?.price)) {
     res.status(400).send("All input is required");
   } else {
     const cart = await cartModel.createCart(req.user.user_id, req.body);
@@ -138,6 +137,11 @@ const updateMyself = async (req, res) => {
   const user = await userModel.findByIdAndUpdate(user_id, req.body);
   return res.json(user);
 };
+const deleteMyself = async (req, res) => {
+  const { user_id } = req.user;
+  const user = await userModel.findByIdAndDelete(user_id, req.body);
+  return res.json(user);
+};
 module.exports = {
   getListUser,
   loginUser,
@@ -155,4 +159,5 @@ module.exports = {
   createOrder,
   editOrder,
   updateMyself,
+  deleteMyself,
 };

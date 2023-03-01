@@ -86,7 +86,7 @@ orderModel.findByIdUser = (user_id) => {
     });
   });
 };
-
+const cartModel = require("../Models/cartModel");
 orderModel.create = async (user_id, data) => {
   console.log(user_id);
   return new Promise((resolve, reject) => {
@@ -95,10 +95,40 @@ orderModel.create = async (user_id, data) => {
       connection.query(
         `INSERT INTO orders(user_id) values (?);`,
         [user_id],
-        (err, rows) => {
+        async (err, rows) => {
           if (err) throw err;
           if (rows.affectedRows !== 0) {
-            resolve(rows);
+            //rows.insertId
+            const listCart = await cartModel.findByIdUser(user_id);
+            if (listCart.length !== 0) {
+              listCart.forEach((item) => {
+                connection.query(
+                  "INSERT INTO order_detail(order_id, product_id, price, quantity) VALUES (?, ?, ?, ?)",
+                  [rows.insertId, item.product_id, item.price, item.quantity],
+                  async (err, result) => {
+                    if (err) throw new Error(err);
+                  }
+                );
+              });
+              const deleteCart = await cartModel.findUserIdAndDelete(user_id);
+              if (deleteCart.affectedRows !== 0) {
+                resolve({ message: "order success" });
+              }
+            }
+            // console.log(listCart);
+            // listCart.forEach((item) => {
+            //   connection.query(
+            //     "INSERT INTO order_detail(order_id, product_id, price, quantity) VALUES (?, ?, ?, ?)",
+            //     [rows.insertId, item.product_id, item.price, item.quantity],
+            //     async (err, result) => {
+            //       if (err) throw new Error(err);
+            //     }
+            //   );
+            // });
+            // reject({ message: "order success" });
+            // } else {
+            // reject({ message: "err" });
+            // }
           }
           connection.release(); // return the connection to pool
         }

@@ -50,7 +50,30 @@
             <li class="nav-item active">
               <a class="nav-link" href="register.html">Register</a>
             </li>
+            <li class="nav-item active">
+              <a class="nav-link btn-list-orders" href="#">list orders</a>
+            </li>
           </ul>
+          <script>
+            $(".btn-list-orders").click(function () {
+              $.ajax({
+                method: "GET",
+                url: "http://localhost:9090/api/user/order/list",
+                beforeSend: function (request) {
+                  request.setRequestHeader(
+                    "token",
+                    localStorage.getItem("token")
+                  );
+                },
+                success: function (data) {
+                  console.log(data);
+                },
+                error: function (err) {
+                  console.log(err);
+                },
+              });
+            });
+          </script>
           <button
             type="button"
             class="btn btn-primary btn-open-cart"
@@ -99,15 +122,19 @@
                         let htmlCart = "";
                         data.forEach((item) => {
                           htmlCart += `
-                          <div class="d-flex justify-content-center">
+                          <div class="d-flex justify-content-between align-items-center gap-1">
                             <img
                             style="width:100px;height:auto;"
                               src="http://localhost:9090/img/products/${item.img}"
                               class="card-img-top"
-                              
                             />
                             <p>${item.name}</p>
-                              <p>${item.quantity}</p>
+                            <div class="d-flex justify-content-center align-items-center">
+                              <button class="btn btn-outline-primary">-</button>  
+                              <input type="text" value="${item.quantity}" style="width:40px"/>
+                              <button class="btn btn-outline-primary">+</button>  
+
+                            </div>
                           </div>`;
                         });
                         $(".modal-cart").html(htmlCart);
@@ -124,9 +151,29 @@
                   >
                     Close
                   </button>
-                  <button type="button" class="btn btn-primary">
+                  <button type="button" class="btn btn-primary btn-order">
                     Save changes
                   </button>
+                  <script>
+                    $(".btn-order").click(function () {
+                      $.ajax({
+                        method: "GET",
+                        url: "http://localhost:9090/api/user/order/list",
+                        beforeSend: function (request) {
+                          request.setRequestHeader(
+                            "token",
+                            localStorage.getItem("token")
+                          );
+                        },
+                        success: function (data) {
+                          console.log(data);
+                        },
+                        error: function (err) {
+                          console.log(err);
+                        },
+                      });
+                    });
+                  </script>
                 </div>
               </div>
             </div>

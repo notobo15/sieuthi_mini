@@ -5,12 +5,14 @@ const { auth, checkPermission } = require("../middlewares/auth");
 router.get("/list", auth, checkPermission, userCtrl.getListUser);
 router.get("/cart/list", auth, userCtrl.getListCart); // get danh sach gio hang
 router.get("/order/list", auth, userCtrl.getListOrder); // get danh sach don dat hang
-router.post("/myself", auth, checkPermission, userCtrl.updateMyself);
 router.get("/logout", userCtrl.logoutUser);
+router.get("/:id", auth, checkPermission, userCtrl.getSingleUser);
+
+router.post("/myself/edit", auth, checkPermission, userCtrl.updateMyself);
+router.post("/myself/delete", auth, checkPermission, userCtrl.deleteMyself);
 
 router.post("/login", userCtrl.loginUser);
 router.post("/register", userCtrl.createUser);
-router.get("/:id", auth, checkPermission, userCtrl.getSingleUser);
 router.post("/edit", auth, checkPermission, userCtrl.EditUser);
 router.post("/delete/:user_id", checkPermission, auth, userCtrl.deleteUser);
 

@@ -29,9 +29,11 @@ app.get("/", (req, res) => {
     res.send(text);
   });
 });
-
+app.get("/ok", (req, res) => {
+  res.send("ok");
+});
 app.use(notFound);
-const port = 9090;
+const port = 3000;
 pool.getConnection(async (err, con) => {
   if (err) {
     console.log(err);

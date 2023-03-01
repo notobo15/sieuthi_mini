@@ -101,7 +101,30 @@ cartModel.findByIdAndDelete = async (id) => {
     pool.getConnection((err, connection) => {
       if (err) throw err;
       connection.query(
-        `DELETE FROM cart where cart_id= ?`,
+        `DELETE FROM cart where cart_id = ?`,
+        [id],
+        (err, rows) => {
+          connection.release(); // return the connection to pool
+          if (err) throw err;
+          if (rows.affectedRows !== 0) {
+            rows.message = "success";
+            resolve(rows);
+          } else {
+            resolve({ message: "not found" });
+          }
+        }
+      );
+    });
+  });
+};
+
+cartModel.findUserIdAndDelete = async (id) => {
+  // let key = Object.keys(data)[0];
+  return new Promise((resolve, reject) => {
+    pool.getConnection((err, connection) => {
+      if (err) throw err;
+      connection.query(
+        `DELETE FROM cart where user_id = ?`,
         [id],
         (err, rows) => {
           connection.release(); // return the connection to pool
@@ -144,18 +167,16 @@ cartModel.createCart = async (user_id, data) => {
     pool.getConnection((err, connection) => {
       if (err) throw err;
       connection.query(
-        `SELECT * FROM cart where user_id = ? and product_id = ?`,
+        `SELECT * FROM cart where user_id = ? and product_id = ? `,
         [user_id, data.product_id],
         (err, rows) => {
           if (err) throw err;
-          console.log(rows);
           if (rows.length !== 0) {
             connection.query(
-              `UPDATE cart SET quantity = quantity + ? where user_id = ? and product_id = ? ;`,
+              `UPDATE cart SET quantity = quantity + ? where user_id = ? and product_id = ?`,
               [data.quantity, user_id, data.product_id],
               (err, rows) => {
                 if (err) throw err;
-                console.log(rows);
                 connection.release(); // return the connection to pool
                 rows.message = "success";
                 resolve(rows);
@@ -163,7 +184,7 @@ cartModel.createCart = async (user_id, data) => {
             );
           } else {
             connection.query(
-              `INSERT INTO cart(user_id, quantity, product_id) values ('${user_id}', '${data.quantity}', '${data.product_id}');`,
+              `INSERT INTO cart(user_id, quantity, product_id, price) values ('${user_id}', '${data.quantity}', '${data.product_id}',  '${data.price}');`,
               (err, rows2) => {
                 if (err) throw err;
                 console.log(rows2);
