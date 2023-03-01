@@ -3,7 +3,6 @@ const productModel = require("../Models/productModel");
 const create = async (req, res) => {
   console.log(req.body);
   const { name, price, cate_id } = req.body;
-  console.log(req.body);
   if (!(name && price && cate_id)) {
     return res.status(400).send("All input is required");
   }

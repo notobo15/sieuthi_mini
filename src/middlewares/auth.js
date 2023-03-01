@@ -27,8 +27,6 @@ const isAdmin = async (req, res, next) => {
 };
 const checkPermission = async (req, res, next) => {
   let permissions = await req.user.permissions;
-  console.log(req.originalUrl);
-  console.log(permissions);
   let isPer = permissions.some((item) => {
     return req.originalUrl.includes(item.code_name);
   });
