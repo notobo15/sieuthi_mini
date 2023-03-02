@@ -36,6 +36,12 @@ const import_product = async (req, res) => {
   const result = await importModel.create(req.body);
   return res.json(result);
 };
+const uploadMultiImage = async (req, res) => {
+  const { id } = req.params;
+  let arrImgs = req.files.map((item) => item.originalname);
+  const result = await productModel.uploadImages(id, arrImgs);
+  return res.json(result);
+};
 module.exports = {
   create,
   getList,
@@ -43,4 +49,5 @@ module.exports = {
   editSingle,
   deleteSingle,
   import_product,
+  uploadMultiImage,
 };

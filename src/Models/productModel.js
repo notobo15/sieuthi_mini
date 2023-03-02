@@ -184,4 +184,65 @@ productModel.create = async (data) => {
   });
 };
 
+productModel.uploadSingleImage = async (product_id, image_name) => {
+  return new Promise((resolve, reject) => {
+    pool.getConnection((err, connection) => {
+      if (err) throw err;
+      connection.query(
+        `INSERT INTO product_image(product_id, image_name) VALUES (?, ?)`,
+        [product_id, image_name],
+        (err, rows) => {
+          if (err) throw err;
+          if (rows.affectedRows !== 0) {
+            rows.message = "success";
+            resolve(rows);
+          } else {
+            resolve({ message: "failed!" });
+          }
+        }
+      );
+      connection.release(); // return the connection to pool
+    });
+  });
+};
+productModel.deleteSingleImage = async (prod_img_id) => {
+  return new Promise((resolve, reject) => {
+    pool.getConnection((err, connection) => {
+      if (err) throw err;
+      connection.query(
+        `DELETE FROM product_image where prod_img_id = ?`,
+        [prod_img_id],
+        (err, rows) => {
+          if (err) throw err;
+          if (rows.affectedRows !== 0) {
+            rows.message = "success";
+            resolve(rows);
+          } else {
+            resolve({ message: "failed!" });
+          }
+        }
+      );
+      connection.release(); // return the connection to pool
+    });
+  });
+};
+productModel.uploadImages = async (product_id, data) => {
+  return new Promise((resolve, reject) => {
+    pool.getConnection((err, connection) => {
+      if (err) throw err;
+      data.forEach((item) => {
+        connection.query(
+          `INSERT INTO product_image(product_id, image_name) VALUES (?, ?)`,
+          [product_id, item],
+          (err, rows) => {
+            if (err) throw err;
+          }
+        );
+      });
+      connection.release(); // return the connection to pool
+    });
+    resolve({ message: "Success" });
+  });
+};
+
 module.exports = productModel;

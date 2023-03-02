@@ -9,8 +9,18 @@ router.post(
   "/",
   auth,
   checkPer,
-  uploadPhoto.array("images", 10),
+  uploadPhoto.single("images"),
   productController.create
+);
+router.post(
+  "/upload-image/:id",
+  uploadPhoto.array("images", 20),
+  productController.uploadMultiImage
+);
+router.post(
+  "/upload-image/edit/:id",
+  uploadPhoto.array("images", 20),
+  productController.uploadMultiImage
 );
 router.post(
   "/edit/:id",
