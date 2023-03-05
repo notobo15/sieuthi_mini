@@ -58,7 +58,7 @@
             $(".btn-list-orders").click(function () {
               $.ajax({
                 method: "GET",
-                url: "http://localhost:9090/api/user/order/list",
+                url: "http://localhost:3000/api/user/order/list",
                 beforeSend: function (request) {
                   request.setRequestHeader(
                     "token",
@@ -111,7 +111,7 @@
                   $(".btn-open-cart").click(function () {
                     $.ajax({
                       method: "GET",
-                      url: "http://localhost:9090/api/user/cart/list",
+                      url: "http://localhost:3000/api/user/cart/list",
                       beforeSend: function (request) {
                         request.setRequestHeader(
                           "token",
@@ -125,7 +125,7 @@
                           <div class="d-flex justify-content-between align-items-center gap-1">
                             <img
                             style="width:100px;height:auto;"
-                              src="http://localhost:9090/img/products/${item.img}"
+                              src="http://localhost:3000/img/products/${item.img}"
                               class="card-img-top"
                             />
                             <p>${item.name}</p>
@@ -158,7 +158,7 @@
                     $(".btn-order").click(function () {
                       $.ajax({
                         method: "GET",
-                        url: "http://localhost:9090/api/user/order/list",
+                        url: "http://localhost:3000/api/user/order/list",
                         beforeSend: function (request) {
                           request.setRequestHeader(
                             "token",
@@ -215,7 +215,7 @@
       $(document).ready(function () {
         $.ajax({
           type: "GET",
-          url: "http://localhost:9090/api/product/list",
+          url: "http://localhost:3000/api/product/list",
           success: function (data) {
             html = "";
             data.forEach((item) => {
@@ -223,7 +223,7 @@
               <div class="col">
                 <div class="card" >
               <div class="card-body" data="${item.product_id}" data-toggle="modal" data-target="#exampleModal" >
-                <img src="http://localhost:9090/img/products/${item.img}" class="card-img-top" alt="..." />
+                <img src="http://localhost:3000/img/products/${item.img}" class="card-img-top" alt="..." />
                 <h5 class="card-title">${item.name}</h5>
                 <p class="card-text" style=" overflow: hidden;
                     display: -webkit-box;
@@ -247,10 +247,10 @@
 
             $(".card-body").click(function () {
               let product_id = $(this).attr("data");
-              console.log(`http://localhost:9090/api/product/${product_id}`);
+              console.log(`http://localhost:3000/api/product/${product_id}`);
               $.ajax({
                 method: "get",
-                url: `http://localhost:9090/api/product/${product_id}`,
+                url: `http://localhost:3000/api/product/${product_id}`,
                 success: (data) => {
                   console.log("data", data);
                   let htmls = `<div class="modal-content">
@@ -263,7 +263,7 @@
                         </button>
                       </div>
                       <div class="modal-body">
-                        <img src="http://localhost:9090/img/products/${data.image_name}" width="100%"/>
+                        <img src="http://localhost:3000/img/products/${data.image_name}" width="100%"/>
                         <p>${data.description}</p>
                       </div>
                       <div class="modal-footer">
@@ -288,7 +288,7 @@
               console.log();
               $.ajax({
                 type: "POST",
-                url: "http://localhost:9090/api/user/cart",
+                url: "http://localhost:3000/api/user/cart",
                 beforeSend: function (request) {
                   request.setRequestHeader(
                     "token",

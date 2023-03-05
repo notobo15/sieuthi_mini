@@ -1,8 +1,7 @@
 const jwt = require("jsonwebtoken");
 const userModel = require("../Models/userModel");
 const auth = (req, res, next) => {
-  const token = req.body.token || req.query.token || req.headers["token"];
-
+  const token = req.headers["token"];
   if (!token) {
     return res.status(403).send("A token is required for authentication");
   }
@@ -27,6 +26,7 @@ const isAdmin = async (req, res, next) => {
 };
 const checkPermission = async (req, res, next) => {
   let permissions = await req.user.permissions;
+  console.log("origin url : ", req.originalUrl);
   let isPer = permissions.some((item) => {
     return req.originalUrl.includes(item.code_name);
   });

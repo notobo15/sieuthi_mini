@@ -4,7 +4,9 @@ const create = async (req, res) => {
   console.log(req.body);
   const { name, price, cate_id } = req.body;
   if (!(name && price && cate_id)) {
-    return res.status(400).send("All input is required");
+    return res
+      .status(400)
+      .send({ message: "All input is required", statusCode: 400 });
   }
   const result = await productModel.create(req.body);
   return res.json(result);

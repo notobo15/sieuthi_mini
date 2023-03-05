@@ -26,14 +26,15 @@
         $("#login-btn").click(function () {
           let user_name = $("#user_name").val();
           let password = $("#password").val();
+          console.log(user_name, password);
           $.ajax({
-            type: "POST",
-            url: "http://localhost:9090/api/user/login",
+            method: "POST",
+            url: "http://localhost:3000/api/user/login",
             data: { user_name, password },
+
             success: function (data) {
+              console.log("data : ", data);
               localStorage.setItem("token", data.token);
-              alert("dang nhap thanh cong");
-              window.location.assign("index.html");
             },
             error: function (e) {
               if (e.status === 400) {

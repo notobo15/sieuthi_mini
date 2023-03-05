@@ -19,10 +19,11 @@ const loginUser = async (req, res) => {
   let { user_name, password } = req.body;
   //user_name == "" || password == ""
   if (!(user_name && password)) {
-    return res.status(400).send("All input is required");
+    return res
+      .status(400)
+      .send({ message: "All input is required", statusCode: 400 });
   }
   const user = await userModel.findOne({ user_name });
-  console.log("user", user);
   if (user) {
     const isMatched = await bcrypt.compare(password, user.password);
     let permissions = await permissionModel.find(user_name);
@@ -58,7 +59,7 @@ const createUser = async (req, res) => {
   let { user_name, password, phone } = req.body;
   // check if user already exist
   if (!(user_name && password && phone)) {
-    res.status(400).send("All input is required");
+    res.status(400).json({ message: "All input is required", statusCode: 400 });
   }
   const user = await userModel.findOne({ user_name });
   if (user) {
