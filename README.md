@@ -1,3 +1,9 @@
+CÁCH CHẠY SERVER:
+  - XAMPP + MYSQL
+  - CÀI NODE JS
+  STEP 1: MỞ MYSQL IMPORT DB ```sieuthi_mini```
+  STEP 2: Mở Terminal ```npm start```
+
 client 
 ### 1. form login
   - input: user_name va password
