@@ -11,8 +11,10 @@ function checkInput(){
         alert("Độ dài Last Name phải lớn hơn 0 và nhỏ hơn 30");
         return false;
     }
-    if(phone.value.length != 10){
-        alert("SĐT có độ dài = 10!");
+    let regex = /^\d{10}$/;
+    if(!phone.value.match(regex)){
+        alert("SĐT phải là số và phải có độ dài = 10!");
+        phone.focus();
         return false;
     }
     return true;
