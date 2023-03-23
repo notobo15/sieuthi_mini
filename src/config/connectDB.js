@@ -11,6 +11,7 @@ function connectDB() {
     user: "root",
     database: "sieuthi_mini",
 
+
     // database: "sieuthi_mini",
     // user: "8qlsjttgajm8885zrcck",
     // host: "ap-southeast.connect.psdb.cloud",

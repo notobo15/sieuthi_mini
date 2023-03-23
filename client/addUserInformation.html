@@ -8,91 +8,64 @@
 
     <!-- Title Page-->
     <title>Add User Information</title>
-    
+
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" />
+
     <!-- Main CSS-->
-    <link href="./lib/bootstrap/css/addUserInformation.css" rel="stylesheet" media="all">
+    <link rel="stylesheet" href="./css/login_register.css" />
 </head>
 
 <body>
-    <div class="page-wrapper bg-gra-02 p-t-130 p-b-100 font-poppins">
-        <div class="wrapper wrapper--w680">
-            <div class="card card-4">
-                <div class="card-body">
-                    <h2 class="title">Add User Information</h2>
-                    <form method="POST" action="" onsubmit="return checkInput();">
-                        <div class="row row-space">
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">first name</label>
-                                    <input id="first_name" class="input--style-4" type="text" name="first_name">
-                                </div>
-                            </div>
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">last name</label>
-                                    <input id="last_name" class="input--style-4" type="text" name="last_name">
-                                </div>
-                            </div>
+    <div class="container active">
+        <div class="forms">
+            <!-- Information Form -->
+            <div class="form signup">
+                <span class="title">Information</span>
+                <form action="" method="post" onsubmit="return checkInformation()">
+                    <div class="flex-box">
+                        <div class="input-field">
+                            <input id="first_name" type="text" placeholder="First name" required />
+                            <i class="uil uil-user-square"></i>
                         </div>
-                        <div class="row row-space">
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Birthday</label>
-                                    <div class="input-group-icon">
-                                        <input class="input--style-4 js-datepicker" type="date" name="birthday">
-                                        <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Gender</label>
-                                    <div class="p-t-10">
-                                        <label class="radio-container m-r-45">Male
-                                            <input type="radio" checked="checked" name="gender">
-                                            <span class="checkmark"></span>
-                                        </label>
-                                        <label class="radio-container">Female
-                                            <input type="radio" name="gender">
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="input-field">
+                            <input id="last_name" type="text" placeholder="Last name" required />
+                            <i class="uil uil-user-square"></i>
                         </div>
-                        <div class="row row-space">
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Address</label>
-                                    <input class="input--style-4" type="text" name="address">
-                                </div>
-                            </div>
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Phone Number</label>
-                                    <input id="phone" class="input--style-4" type="text" name="phone">
-                                </div>
-                            </div>
+                    </div>
+                    <div class="flex-box" style="margin-bottom: 30px;">
+                        <div class="input-field">
+                            <input id="phone" type="text" placeholder="Phone" required />
+                            <i class="uil uil-phone icon"></i>
                         </div>
-                                                
-                        <div class="input-group">
-                            <label class="label">Delivery Address</label>
-                            <input class="input--style-4" type="text" name="delivery_address">
+                        <div class="input-field">
+                            <input id="birth_date" type="date" required />
+                            <i class="uil uil-calender icon"></i>
                         </div>
-                        
-                        <div class="p-t-15">
-                            <button class="btn btn--radius-2 btn--blue" type="submit">Add</button>
-                        </div>
-                    </form>
-                </div>
+                    </div>
+                    <div class="gender">
+                        <label for="" style="margin-right: 120px;">Gender: </label>
+                        <input type="radio" name="gender" value="male" required> Male
+                        <input type="radio" name="gender" value="female" style="margin-left: 30px;" required> Female
+                    </div>
+                    <div class="input-field">
+                        <input id="password_rg_confirm" type="text" placeholder="Address" required />
+                        <i class="uil uil-user-location icon"></i>
+                    </div>
+                    <div class="input-field">
+                        <input id="password_rg_confirm" type="text" placeholder="Address Delivery" required />
+                        <i class="uil uil-location-point icon"></i>
+                    </div>
+                    <div class="input-field button">
+                        <input type="submit" value="Update" />
+                    </div>
+                </form>
+                <div class="error"></div>
             </div>
         </div>
     </div>
 
-    <!-- My JS -->
-    <script src="./js/addUserInformation.js"></script>
-
 </body>
+<script src="./js/addUserInformation.js"></script>
 
 </html>
 <!-- end document-->
