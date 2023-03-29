@@ -253,7 +253,8 @@
                 url: `http://localhost:3000/api/product/${product_id}`,
                 success: (data) => {
                   console.log("data", data);
-                  let htmls = `<div class="modal-content">
+                  let htmls = `
+                  <div class="modal-content">
                       <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel" class="close" data-dismiss="modal" aria-label="Close">
                           ${data.name}

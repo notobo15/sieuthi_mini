@@ -5,12 +5,11 @@ function connectDB() {
     // host: "sql12.freemysqlhosting.net",
     // user: "sql12602001",
     // database: "sql12602001",
-    // password: "IfuGFfsg1Z",
+    
 
     host: "localhost",
     user: "root",
     database: "sieuthi_mini",
-
 
     // database: "sieuthi_mini",
     // user: "8qlsjttgajm8885zrcck",
