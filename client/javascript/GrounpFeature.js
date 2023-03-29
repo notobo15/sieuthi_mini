@@ -92,7 +92,7 @@ $(document).ready(function() {
               <div class="container-grounpfreature-2">
               <div class="title-grounpfeature-2">
                   <div class="heart-grounpfeature-2"></div>
-                  <h3 class="fs-4">${item.name}</h3>
+                  <h3 class="fs-4 text-uppercase">${item.name}</h3>
               </div>
               <div class="row pb-2 px-3 grounp-category2" data=${item.category_id}>
               
