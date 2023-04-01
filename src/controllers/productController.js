@@ -17,7 +17,9 @@ const getList = async (req, res) => {
   return res.send(list);
 };
 const getSingle = async (req, res) => {
+  console.log(req.params);
   const { id } = req.params;
+  console.log(id);
   const result = await productModel.findById(id);
   return res.send(result);
 };

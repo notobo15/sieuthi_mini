@@ -85,7 +85,7 @@ productModel.findById = async (id) => {
     pool.getConnection((err, connection) => {
       if (err) throw err;
       connection.query(
-        `SELECT T1.*, T2.image_name FROM product T1 JOIN product_image T2
+        `SELECT T1.*, T2.image_name FROM product T1 LEFT JOIN product_image T2
         ON T1.product_id = T2.product_id WHERE T1.product_id = ?`,
         [id],
         (err, rows) => {
@@ -95,7 +95,9 @@ productModel.findById = async (id) => {
             let result = rows[0];
             let arrImg = [];
             rows.forEach((item) => {
-              arrImg.push(item.image_name);
+              if (item.arrImg) {
+                arrImg.push(item.image_name);
+              }
             });
             result.arrImg = arrImg;
 
