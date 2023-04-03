@@ -107,7 +107,7 @@
     position: relative;
     background-color: #fff;
  }
- .modal_body_card_header a {
+ .modal_body_card_header span {
     position: absolute;
     color: black;
     top: 20px;
@@ -132,6 +132,7 @@
     cursor:pointer; 
    
 }
+.minus_card_2, .plus_card_2,
 .minus_card, .plus_card{
 			width:35px;
 			height:35px;
@@ -146,6 +147,7 @@
             font-size: 15px;
              
 }
+.number_card_2 input,
 .number_card input{
 		    height:34px;
             width: 60px;

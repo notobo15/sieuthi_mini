@@ -6,6 +6,9 @@
     cursor:pointer; 
    
 }
+.modal-body img {
+    object-fit: contain;
+}
 		.number{
 			margin: 10px 0px;
 		}
@@ -33,3 +36,4 @@
             display: inline-block;
             vertical-align: middle;
         }
+        

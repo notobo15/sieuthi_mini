@@ -7,3 +7,4 @@ oderElement.addEventListener('click',function(e){
 closeoder.addEventListener('click',function(e){
     modaloder.style.display = 'none';
 });
+
