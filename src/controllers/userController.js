@@ -98,7 +98,8 @@ const getListCart = async (req, res) => {
 const createCart = async (req, res) => {
   if (!(req.body?.quantity && req.body?.product_id && req.body?.price)) {
     res.status(400).send("All input is required");
-  } else {
+  } 
+  else {
     const cart = await cartModel.createCart(req.user.user_id, req.body);
     return res.json(cart);
   }

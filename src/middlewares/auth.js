@@ -32,7 +32,7 @@ const checkPermission = async (req, res, next) => {
   });
   if (isPer) {
     await next();
-  } else {
+  } else { 
     res.json("Invalid Permisstion");
   }
 };
