@@ -9,6 +9,7 @@ function connectDB() {
 
     host: "localhost",
     user: "root",
+    password:"123456",
     database: "sieuthi_mini",
 
     // database: "sieuthi_mini",

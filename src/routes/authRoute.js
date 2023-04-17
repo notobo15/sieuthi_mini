@@ -2,7 +2,7 @@ const express = require("express");
 const userCtrl = require("../controllers/userController");
 const router = express.Router();
 const { auth, checkPermission } = require("../middlewares/auth");
-router.get("/list", auth, checkPermission, userCtrl.getListUser);
+router.get("/list", userCtrl.getListUser);
 router.get("/cart/list", auth, userCtrl.getListCart); // get danh sach gio hang
 router.get("/order/list", auth, userCtrl.getListOrder); // get danh sach don dat hang
 router.get("/logout", userCtrl.logoutUser);
