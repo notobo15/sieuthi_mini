@@ -16,6 +16,8 @@
     <link rel="stylesheet" href="assets/css/product.css">
     <link rel="stylesheet" href="assets/css/user_profile.css">
     <link rel="stylesheet" href="assets/css/product_profile.css">
+    <link rel="stylesheet" href="assets/css/order.css">
+
 
 
 
@@ -259,91 +261,34 @@
                         </tbody>
                     </table>
                 </section>
-
-
-
-
             </main>
 
-<!-- 
-            <div id="product_profile_popup">
-                <div class="close">&times;</div>
-                <div class="product_profile">
-                    <img src="./assets/imgs/Alson GC.jpg" alt="">
-                    <div class="product_ele">
-                        <label for="product_id">Id</label>
-                        <input type="text" name="product_id" id="">
+            <!--================================= Orders =======================================================-->
+            <main id="order_container">
+                <section class="order_header">
+                    <h1>Orders</h1>
+                    <div class="input-group">
+                        <input type="search" placeholder="Search Data...">
+                        <img src="assets/imgs/search.png" alt="">
                     </div>
-                    <div class="product_ele">
-                        <label for="product_name">Name</label>
-                        <input type="text" name="product_name" id="">
-                    </div>
-                    <div class="product_ele">
-                        <label for="product_slug">Slug:</label>
-                        <input type="text" name="product_slug" id="">
-                    </div>
-                    <div class="product_ele">
-                        <label for="product_description">Description</label>
-                        <textarea name="product_description" id=""></textarea>
-                    </div>
-                    <div class="product_ele">
-                        <label for="product_price">Price</label>
-                        <input type="text" name="product_price" id="">
-                    </div>
-                    <div class="product_ele">
-                        <label for="product_mass">Mass</label>
-                        <input type="text" name="product_mass" id="">
-                    </div>
-                    <div class="product_ele">
-                        <label for="product_ingredient">Ingerdient</label>
-                        <textarea name="product_ingredient" id=""></textarea>
-                    </div>
-                    <div class="product_ele">
-                        <label for="product_htu">HowToUse</label>
-                        <input type="text" name="product_htu" id="">
-                    </div>
-                    <div class="product_ele">
-                        <label for="product_preserve">Preserve</label>
-                        <textarea name="product_preserve" id=""></textarea>
-                    </div>
-                    <div class="product_ele">
-                        <label for="product_trademark">Trademark</label>
-                        <input type="text" name="product_trademark" id="">
-                    </div>
-                    <div class="product_ele">
-                        <label for="product_markin">Markin</label>
-                        <input type="text" name="product_markin" id="">
-                    </div>
-                    <div class="product_ele">
-                        <label for="product_cate">Category</label>
-                        <select name="product_cate" id="product_cate" class="" >
-                            <option value="Mì, hủ tiếu, phở gói">Mì, hủ tiếu, phở gói</option>
-                            <option value="Gia Vị - Nguyên Liệu Nấu Ăn" >Gia Vị - Nguyên Liệu Nấu Ăn</option>
-                            <option value="2" >Đồ hộp các loại</option>
-                            <option value="Rau lá">Rau lá</option>    
-                            <option value="Củ, quả">Củ, quả</option>    
-                            <option value="Trái cây">Trái cây</option>
-                            <option value="Thịt các loại">Thịt các loại</option>
-                            <option value="Cá, hải sản">Cá, hải sản</option>
-                            <option value="Bia">Bia</option>
-                            <option value="Nước ngọt">Nước ngọt </option>
-                            <option value="Bánh Snake">Bánh Snake</option>
-                            <option value="Nước giặt">Nước giặt</option>
-                            <option value="Nồi, niêu, xoong, chảo">Nồi, niêu, xoong, chảo</option>
-                        </select>
-                    </div>
-                    <div class="product_footer">
-                        <button class="add">Add</button>
-                        <button class="save">Save</button>
-                        <Button class="cancel">Cancel</Button>
-                    </div>
-                </div>  
-            </div> -->
-<!-- <script>
-    var a = document.querySelectorAll('#product_cate option');
-   
-    console.log( parseInt typeof a[2].value)
-</script> -->
+                    
+                </section>
+                <section class="order_table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Order Time<span class="icon-arrow">&UpArrow;</span></th>
+                                <th>Order Id<span class="icon-arrow">&UpArrow;</span></th>
+                                <th>User Id<span class="icon-arrow">&UpArrow;</span></th>
+                                <th>Status<span class="icon-arrow">&UpArrow;</span></th>
+                                <th>Actions<span class="icon-arrow">&UpArrow;</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </section>
+            </main>
 
 
         </div>
@@ -352,10 +297,10 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"
             integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
         <script src="assets/js/main.js"></script>
         <script src="assets/js/user.js"></script>
         <script src="assets/js/product.js"></script>
+        <script src="assets/js/order.js"></script>
 
 
 

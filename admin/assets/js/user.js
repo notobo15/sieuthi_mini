@@ -250,9 +250,9 @@ function DeleteUser() {
 
     user_delete.forEach((item, index) => {
         item.addEventListener("click", () => {
-            var confirm = window.confirm("Are u sure about that?");
+            var row = item.parentNode.parentNode;
+            var confirm = window.confirm(`Do you want to delete: ${row.children[1].textContent} - ${row.children[2].textContent}  ??`);
             if (confirm) {
-                var row = item.parentNode.parentNode;
                 console.log(row);
                 users.removeChild(row);
             }

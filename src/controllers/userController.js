@@ -119,8 +119,8 @@ const emptyCart = async (req, res) => {
   return res.json(cart);
 };
 const getListOrder = async (req, res) => {
-  const { user_id } = req.user;
-  let order = await orderModel.findByIdUser(user_id);
+  // const { user_id } = req.user;
+  let order = await orderModel.findByIdUser();
   return res.json(order);
 };
 const createOrder = async (req, res) => {

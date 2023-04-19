@@ -191,7 +191,7 @@ function EditProduct() {
                         </select>
                     </div>
                     <div class="product_footer">
-                        <button class="save">Save</button>
+                        <button class="save" disabled style="pointer-events: none">Save</button>
                         <Button class="cancel">Cancel</Button>
                     </div>
                 </div>  
@@ -204,7 +204,14 @@ function EditProduct() {
                 })
                 document.querySelector('.main').appendChild(html);
 
+                // ---------------------------- Disable save button -------------------------------------------------//
 
+                var a = doc.querySelector('#product_profile_popup');
+                a.addEventListener('input', () => {
+                    let save = a.querySelector('.save');
+                    save.disabled = false;
+                    save.style.pointerEvents = 'auto';
+                })
 
 
                 // ---------------------------- Close produce profile -------------------------------------------------//
@@ -321,6 +328,8 @@ function AddProduct() {
                 `;
         document.querySelector('.main').appendChild(html);
 
+
+
         // ---------------------------- Close produce profile -------------------------------------------------//
         var close = document.querySelector('#product_profile_popup .close');
         var cancel = document.querySelector('#product_profile_popup .cancel');
@@ -342,6 +351,7 @@ function AddProduct() {
 }
 
 
+
 function DeleteProduct() {
     var dels = document.querySelectorAll('#product_container .product_delete');
     dels.forEach(del => {
@@ -351,9 +361,12 @@ function DeleteProduct() {
             if (confirm) {
                 row.parentNode.removeChild(row);
             }
+
         })
     })
 }
+
+
 
 
 
@@ -378,3 +391,4 @@ searchTable();
 EditProduct();
 AddProduct();
 DeleteProduct();
+

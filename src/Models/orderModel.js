@@ -1,7 +1,7 @@
 const connectDB = require("../config/connectDB");
 const pool = connectDB();
 function orderModel() {}
-orderModel.findByIdUser = (user_id) => {
+orderModel.findByIdUser = () => {
   return new Promise((resolve, reject) => {
     pool.getConnection((err, connection) => {
       if (err) throw err;
@@ -10,13 +10,11 @@ orderModel.findByIdUser = (user_id) => {
         //   " JOIN order_detail T2 ON T1.order_id = T2.order_id" +
         //   " JOIN product T3 ON T3.product_id = T2.product_id" +
         //   " where user_id = ?",
-        `SELECT T1.order_id, t1.user_id, T1.status,COUNT(T2.quantity)* T2.price AS totalPrice, GROUP_CONCAT(T3.name, ' : ',  T2.quantity,' : ' ,'<br/>') as product_detail
+        `SELECT T1.order_id, t1.user_id, T1.status,COUNT(T2.quantity)* T2.price AS totalPrice, GROUP_CONCAT(T3.name, ' : ',  T2.quantity,' : ' ,'\n') as product_detail
           FROM orders T1 
           JOIN order_detail T2 ON T1.order_id = T2.order_id 
           JOIN product T3 ON T3.product_id = T2.product_id 
-          where user_id = ?
           GROUP BY T1.order_id`,
-        [user_id],
         (err, rows) => {
           connection.release(); // return the connection to pool
           if (err) throw err;
@@ -137,6 +135,7 @@ orderModel.create = async (user_id, data) => {
   });
 };
 orderModel.findByIdAndUpdate = async (order_id, { status }) => {
+  console.log(status);
   return new Promise((resolve, reject) => {
     pool.getConnection((err, connection) => {
       if (err) throw err;
