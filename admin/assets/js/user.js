@@ -152,6 +152,7 @@ function AddUser() {
 
         document.querySelector('#user_table table tbody').appendChild(html);
         user_profile.style.display = 'none';
+        DeleteUser();
     }
 }
 
@@ -254,9 +255,6 @@ function DeleteUser() {
                 var row = item.parentNode.parentNode;
                 console.log(row);
                 users.removeChild(row);
-            }
-            else {
-
             }
         })
     })

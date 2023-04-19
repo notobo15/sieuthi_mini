@@ -30,7 +30,7 @@ router.post(
   productController.editSingle
 );
 // });
-router.post("/edit/:id", auth, checkPer, productController.editSingle);
+router.post("/edit/:id",  productController.editSingle);
 router.post("/delete/:id", auth, checkPer, productController.deleteSingle);
 
 router.post("/import", productController.import_product);

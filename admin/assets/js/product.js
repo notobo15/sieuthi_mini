@@ -102,23 +102,31 @@ function sortTable(column, sort_asc) {
         .map(sorted_row => document.querySelector('.product_table tbody').appendChild(sorted_row));
 }
 
+
 function EditProduct() {
     var edits = document.querySelectorAll('.product_edit');
 
     edits.forEach(edit => {
 
         edit.addEventListener('click', () => {
-           
+
+            // ---------------------------- Load form -------------------------------------------------//
+            const doc = document.querySelector('.main');
+            if (doc.querySelector('#product_profile_popup') !== null) {
+                var rm = doc.querySelector('#product_profile_popup');
+                doc.removeChild(rm);
+            }
+
             var xml = new XMLHttpRequest();
             xml.onload = function () {
-                var data = JSON.parse( this.responseText);
-                console.log(data);
+                var data = JSON.parse(this.responseText);
+                // console.log(data);
                 var html = document.createElement('div');
                 html.id = "product_profile_popup";
                 html.innerHTML = `
                 <div class="close">&times;</div>
                 <div class="product_profile">
-                    <img src="http://localhost:3000/img/products/${data.img }" alt="">
+                    <img src="http://localhost:3000/img/products/${data.img}" alt="">
                     <div class="product_ele">
                         <label for="product_id">Id</label>
                         <input type="text" name="product_id" id="" value="${data.product_id}">
@@ -183,27 +191,168 @@ function EditProduct() {
                         </select>
                     </div>
                     <div class="product_footer">
-                        <button class="add">Add</button>
                         <button class="save">Save</button>
                         <Button class="cancel">Cancel</Button>
                     </div>
                 </div>  
                 `;
                 var opts = html.querySelectorAll('#product_cate option');
-                console.log(opts[2].selected)
                 opts.forEach(opt => {
                     if (parseInt(opt.value) == parseInt(data.cate_id)) {
                         opt.selected = true;
                     }
                 })
                 document.querySelector('.main').appendChild(html);
+
+
+
+
+                // ---------------------------- Close produce profile -------------------------------------------------//
+                var close = document.querySelector('#product_profile_popup .close');
+                var cancel = document.querySelector('#product_profile_popup .cancel');
+                var product_profile = document.querySelector('#product_profile_popup');
+
+                close.addEventListener('click', () => {
+                    document.querySelector('.main').removeChild(product_profile);
+                });
+
+                cancel.addEventListener('click', () => {
+                    document.querySelector('.main').removeChild(product_profile);
+                })
+
+
+
+                // ---------------------------- save produce profile -------------------------------------------------//
+                var close = document.querySelector('#product_profile_popup .save');
+
+
             }
 
             xml.open("GET", `http://localhost:3000/api/product/${edit.value}`, false);
             xml.send();
         })
     })
-    
+}
+
+function AddProduct() {
+    var add = document.querySelector('.add_product_btn');
+
+    add.addEventListener('click', () => {
+        const doc = document.querySelector('.main');
+        if (doc.querySelector('#product_profile_popup') !== null) {
+            var rm = doc.querySelector('#product_profile_popup');
+            doc.removeChild(rm);
+        }
+
+        var html = document.createElement('div');
+        html.id = "product_profile_popup";
+        html.innerHTML = `
+                <div class="close">&times;</div>
+                <div class="product_profile">
+                    <img src="http://localhost:3000/img/products/gia-vi-hoan-chinh-dang-xot-thit-kho-trung-chinsu-goi-70g-201905240016431259.jpg" alt="">
+                    <div class="product_ele">
+                        <label for="product_id">Id</label>
+                        <input type="text" name="product_id" id="" value="">
+                    </div>
+                    <div class="product_ele">
+                        <label for="product_name">Name</label>
+                        <input type="text" name="product_name" id="" value="">
+                    </div>
+                    <div class="product_ele">
+                        <label for="product_slug">Slug:</label>
+                        <input type="text" name="product_slug" id="" value="">
+                    </div>
+                    <div class="product_ele">
+                        <label for="product_description">Description</label>
+                        <textarea name="product_description" id="" ></textarea>
+                    </div>
+                    <div class="product_ele">
+                        <label for="product_price">Price</label>
+                        <input type="text" name="product_price" id="" value="">
+                    </div>
+                    <div class="product_ele">
+                        <label for="product_mass">Mass</label>
+                        <input type="text" name="product_mass" id="" value="">
+                    </div>
+                    <div class="product_ele">
+                        <label for="product_ingredient">Ingerdient</label>
+                        <textarea name="product_ingredient" id=""></textarea>
+                    </div>
+                    <div class="product_ele">
+                        <label for="product_htu">HowToUse</label>
+                        <input type="text" name="product_htu" id="" value="">
+                    </div>
+                    <div class="product_ele">
+                        <label for="product_preserve">Preserve</label>
+                        <textarea name="product_preserve" id=""></textarea>
+                    </div>
+                    <div class="product_ele">
+                        <label for="product_trademark">Trademark</label>
+                        <input type="text" name="product_trademark" id="" value="">
+                    </div>
+                    <div class="product_ele">
+                        <label for="product_markin">Markin</label>
+                        <input type="text" name="product_markin" id="" value="">
+                    </div>
+                    <div class="product_ele">
+                        <label for="product_cate">Category</label>
+                        <select name="product_cate" id="product_cate" class="" >
+                            <option value="1">Mì, hủ tiếu, phở gói</option>
+                            <option value="4" >Gia Vị - Nguyên Liệu Nấu Ăn</option>
+                            <option value="7" >Gạo các loại</option>
+                            <option value="10" >Đồ hộp các loại</option>
+                            <option value="12">Rau lá</option>    
+                            <option value="13">Củ, quả</option>    
+                            <option value="14">Trái cây</option>
+                            <option value="15">Thịt các loại</option>
+                            <option value="16">Cá, hải sản</option>
+                            <option value="17">Bia</option>
+                            <option value="18">Nước ngọt </option>
+                            <option value="19">Bánh Snake</option>
+                            <option value="20">Nước giặt</option>
+                            <option value="21">Nồi, niêu, xoong, chảo"</option>
+                        </select>
+                    </div>
+                    <div class="product_footer">
+                        <button class="add">Add</button>
+                        <Button class="cancel">Cancel</Button>
+                    </div>
+                </div>  
+                `;
+        document.querySelector('.main').appendChild(html);
+
+        // ---------------------------- Close produce profile -------------------------------------------------//
+        var close = document.querySelector('#product_profile_popup .close');
+        var cancel = document.querySelector('#product_profile_popup .cancel');
+        var product_profile = document.querySelector('#product_profile_popup');
+
+        close.addEventListener('click', () => {
+            document.querySelector('.main').removeChild(product_profile);
+        });
+
+        cancel.addEventListener('click', () => {
+            document.querySelector('.main').removeChild(product_profile);
+        })
+
+
+        // ---------------------------- Add produce profile -------------------------------------------------//
+        DeleteProduct();
+
+    })
+}
+
+
+function DeleteProduct() {
+    var dels = document.querySelectorAll('#product_container .product_delete');
+    dels.forEach(del => {
+        del.addEventListener('click', () => {
+            var row = del.parentNode.parentNode;
+            var confirm = window.confirm(`Do you want to delete: ${row.children[2].textContent} ??`);
+            if (confirm) {
+                row.parentNode.removeChild(row);
+            }
+        })
+    })
 }
 
 
@@ -227,3 +376,5 @@ function EditProduct() {
 
 searchTable();
 EditProduct();
+AddProduct();
+DeleteProduct();
