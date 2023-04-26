@@ -14,7 +14,7 @@ Code written by:
     height: 80;
 } */
 
-main#suppilier_container {
+main#discount_container {
 
     width: 90%;
     height: 100%;
@@ -24,11 +24,11 @@ main#suppilier_container {
     box-shadow: 0 .4rem .8rem #0005;
     border-radius: .8rem;
     margin-top: 1rem;
-    display: none;
+    display: block;
     overflow: hidden;
 }
 
-.suppilier_header {
+.discount_header {
     /* width: 100%;
     height: 10%; */
 
@@ -42,7 +42,7 @@ main#suppilier_container {
     align-items: center;
 }
 
-.suppilier_header .input-group {
+.discount_header .input-group {
     width: 35%;
     height: 100%;
     background-color: #fff5;
@@ -56,18 +56,18 @@ main#suppilier_container {
     transition: .2s;
 }
 
-.suppilier_header .input-group:hover {
+.discount_header .input-group:hover {
     width: 45%;
     background-color: #fff8;
     box-shadow: 0 .1rem .4rem #0002;
 }
 
-.suppilier_header .input-group img {
+.discount_header .input-group img {
     width: 1.2rem;
     height: 1.2rem;
 }
 
-.suppilier_header .input-group input {
+.discount_header .input-group input {
     width: 100%;
     padding: 0 .5rem 0 .3rem;
     background-color: transparent;
@@ -75,7 +75,7 @@ main#suppilier_container {
     outline: none;
 }
 
-.suppilier_table {
+.discount_table {
     width: 95%;
     max-height: calc(95% - 1.6rem);
     background-color: rgba(143, 141, 141, 0.733);
@@ -85,36 +85,36 @@ main#suppilier_container {
     overflow: overlay;
 }
 
-.suppilier_table::-webkit-scrollbar {
+.discount_table::-webkit-scrollbar {
     width: 0.5rem;
     height: 0.5rem;
 }
 
-.suppilier_table::-webkit-scrollbar-thumb {
+.discount_table::-webkit-scrollbar-thumb {
     border-radius: .5rem;
     background-color: #0004;
     visibility: hidden;
 }
 
-.suppilier_table:hover::-webkit-scrollbar-thumb {
+.discount_table:hover::-webkit-scrollbar-thumb {
     visibility: visible;
 }
 
-.suppilier_table table {
+.discount_table table {
     width: 100%;
     
 }
 
 
-.suppilier_table table,
-.suppilier_table th,
-.suppilier_table td {
+.discount_table table,
+.discount_table th,
+.discount_table td {
     border-collapse: collapse;
     padding: .8rem;
     text-align: center;
 }
 
-.suppilier_table thead th {
+.discount_table thead th {
     position: sticky;
     top: 0;
     left: 0;
@@ -124,36 +124,40 @@ main#suppilier_container {
     text-transform: capitalize;
 }   
 
-.suppilier_table tbody tr:nth-child(even) {
+.discount_table tbody tr:nth-child(even) {
     background-color: #6865650b;
 }
 
-.suppilier_table tbody tr.hide {
+.discount_table tbody tr.hide {
     display: none;
 }
 
-.suppilier_table tbody tr:hover {
+.discount_table tbody tr:hover {
     background-color: rgba(184, 181, 181, 0.4) !important;
 }
 
-#suppilier_container .suppilier_table td:nth-child(1) {
+#discount_container .discount_table td:nth-child(1) {
     width: 10%;
 }
-#suppilier_container .suppilier_table td:nth-child(2) {
-    width: 15%;
+#discount_container .discount_table td:nth-child(2) {
+    width: 12%;
 }
-#suppilier_container .suppilier_table td:nth-child(3) {
-    width: 15%;
+#discount_container .discount_table td:nth-child(3) {
+    width: 12%;
 }
-#suppilier_container .suppilier_table td:nth-child(4) {
+#discount_container .discount_table td:nth-child(4) {
+    width: 13%;
+}
+#discount_container .discount_table td:nth-child(5) {
     width: 13%;
 }
 
-#suppilier_container .suppilier_table td:nth-child(5) {
-    width: 15%;
+
+#discount_container .discount_table td:nth-child(6) {
+    width: 13%;
 }
 
-#suppilier_container .suppilier_table td:nth-child(6) {
+#discount_container .discount_table td:nth-child(7) {
     width: 100%;
     height: 100%;
     display: flex;
@@ -163,7 +167,7 @@ main#suppilier_container {
     gap: 8px;
 }
 
-#suppilier_container .suppilier_table button {
+#discount_container .discount_table button {
     cursor: pointer;
     border-radius: 8px;
     border: none;
@@ -175,28 +179,29 @@ main#suppilier_container {
     white-space: pre-wrap;
 }
 
-#suppilier_container .suppilier_table .edit {
+#discount_container .discount_table .edit {
     background-color: rgb(29, 238, 39);
 }
 
-#suppilier_container .suppilier_table .delete {
+#discount_container .discount_table .delete {
     background-color: rgb(226, 61, 39);
 }
 
-#suppilier_container .suppilier_table .edit:hover {
+#discount_container .discount_table .edit:hover {
     background-color: rgb(10, 189, 19);
 }
 
-#suppilier_container .suppilier_table .delete:hover {
+
+#discount_container .discount_table .delete:hover {
     background-color: rgb(180, 40, 22);
 }
 
 @media (max-width: 1000px) {
-    .suppilier_table td:not(:first-of-type) {
+    .discount_table td:not(:first-of-type) {
         min-width: 12.1rem;
     }
 
-    #suppilier_container .suppilier_table td:nth-child(6) {
+    #discount_container .discount_table td:nth-child(7) {
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -204,7 +209,7 @@ main#suppilier_container {
         gap: 5px;
     }
 
-    #suppilier_container .suppilier_table button {
+    #discount_container .discount_table button {
         cursor: pointer;
         border-radius: 10px;
         border: none;
@@ -216,7 +221,7 @@ main#suppilier_container {
     }
 }
 
-.suppilier_table thead th span.icon-arrow {
+.discount_table thead th span.icon-arrow {
     display: inline-block;
     width: 1.3rem;
     height: 1.3rem;
@@ -230,33 +235,33 @@ main#suppilier_container {
     transition: .2s ease-in-out;
 }
 
-.suppilier_table thead th:hover span.icon-arrow {
+.discount_table thead th:hover span.icon-arrow {
     border: 1.4px solid #11c3f0;
 }
 
-.suppilier_table thead th:hover {
+.discount_table thead th:hover {
     color: #11c3f0;
 }
 
-.suppilier_table thead th.active span.icon-arrow {
+.discount_table thead th.active span.icon-arrow {
     background-color: #6c00bd;
     color: #fff;
 }
 
-.suppilier_table thead th.asc span.icon-arrow {
+.discount_table thead th.asc span.icon-arrow {
     transform: rotate(180deg);
 }
 
-.suppilier_table thead th.active,
-.suppilier_table tbody td.active {
+.discount_table thead th.active,
+.discount_table tbody td.active {
     color: #6c00bd;
 }
 
-.reload_suppilier {
+.reload_discount {
     position: relative;
 }
 
-.suppilier_header .reload_suppilier .reload_suppilier_btn {
+.discount_header .reload_discount .reload_discount_btn {
     display: inline-block;
     width: 3rem;
     height: 3rem;
@@ -265,12 +270,12 @@ main#suppilier_container {
     transition: .2s ease-in-out;
 }
 
-.suppilier_header .reload_suppilier .reload_suppilier_btn:hover {
+.discount_header .reload_discount .reload_discount_btn:hover {
     background-color: #fff6;
     transform: scale(1.15);
     cursor: pointer;
 }
 
-.reload_suppilier input {
+.reload_discount input {
     display: none;
 }

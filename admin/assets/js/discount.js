@@ -1,28 +1,29 @@
-function LoadSuppilier() {
+function LoadDiscount() {
     return new Promise((resolve, reject) => {
         var xml = new XMLHttpRequest();
-        xml.open("GET", 'http://localhost/sieuthi_mini_api_php/api/suppilier/list.php', true);
+        xml.open("GET", 'http://localhost/sieuthi_mini_api_php/api/discount/list.php', true);
         xml.send();
         xml.onload = function () {
-            let sups = JSON.parse(this.responseText);
+            let discounts = JSON.parse(this.responseText);
             var html = ``;
-            for (const sup of sups) {
-                html += ` <tr><td>${sup.id}</td>
-                <td>${sup.name}</td>
-                <td>${sup.address}</td>
-                <td>${sup.phone}</td>
-                <td>${sup.isDeleted}</td>
+            for (const discount of discounts) {
+                html += ` <tr><td>${discount.id}</td>
+                <td>${discount.name}</td>
+                <td>${discount.price_per}</td>
+                <td>${discount.start_date}</td>
+                <td>${discount.end_date}</td>
+                <td>${discount.isDeleted}</td>
                 <td>
-                    <button class="edit" value="${sup.id}">Edit</button>
-                    <button class="delete" value="${sup.id}">Delete</button>
+                    <button class="edit" value="${discount.id}">Edit</button>
+                    <button class="delete" value="${discount.id}">Delete</button>
                 </td> </tr>`;
             }
-            document.querySelector('#suppilier_container .suppilier_table tbody').innerHTML = html;
+            document.querySelector('#discount_container .discount_table tbody').innerHTML = html;
             resolve();
         }
 
         xml.onerror = function () {
-            console.log("** An error occurred during the load suppilier");
+            console.log("** An error occurred during the load discount");
             reject();
         }
 
@@ -36,8 +37,8 @@ function LoadSuppilier() {
 }
 
 
-function EditSuppilier() {
-    var edits = document.querySelectorAll('#suppilier_container .edit');
+function EditDiscount() {
+    var edits = document.querySelectorAll('#discount_container .edit');
 
     for (const edit of edits) {
         edit.addEventListener('click', () => {
@@ -59,21 +60,25 @@ function EditSuppilier() {
                 <div class="form_profile" >
                     
                     <div class="form_ele">
-                        <label for="suppilier_id">Id</label>
-                        <input type="text" name="suppilier_id" id="suppilier_id" value="${data[0].textContent}">
+                        <label for="discount_id">Id</label>
+                        <input type="text" name="discount_id" id="discount_id" value="${data[0].textContent}">
                     </div>
                     <div class="form_ele">
-                        <label for="suppilier_name">Name</label>
-                        <input type="text" name="suppilier_name" id="suppilier_name" value="${data[1].textContent}">
+                        <label for="discount_name">Name</label>
+                        <input type="text" name="discount_name" id="discount_name" value="${data[1].textContent}">
                     </div>
                     <div class="form_ele">
-                        <label for="suppilier_address">Name_code</label>
-                        <input type="text" name="suppilier_address" id="suppilier_address" value="${data[2].textContent}">
+                        <label for="discount_price_per">Name_code</label>
+                        <input type="text" name="discount_price_per" id="discount_price_per" value="${data[2].textContent}">
+                    </div>
+                    <div class="form_ele">
+                        <label for="discount_start_date">Name_code</label>
+                        <input type="text" name="discount_start_date" id="discount_start_date" value="${data[3].textContent}">
                     </div>  
                     <div class="form_ele">
-                        <label for="suppilier_phone">Name_code</label>
-                        <input type="text" name="suppilier_phone" id="suppilier_phone" value="${data[3].textContent}">
-                    </div>  
+                        <label for="discount_end_date">Name_code</label>
+                        <input type="text" name="discount_end_date" id="discount_end_date" value="${data[4].textContent}">
+                    </div>    
                     <div class="form_footer">
                         <Button class="save" disabled style="pointer-events: none">Save</Button>
                         <Button class="cancel">Cancel</Button>
@@ -90,7 +95,7 @@ function EditSuppilier() {
                 save.style.pointerEvents = 'auto';
             })
 
-            // ---------------------------- Close suppilier profile -------------------------------------------------//
+            // ---------------------------- Close produce profile -------------------------------------------------//
             var close = document.querySelector('#form_popup .close');
             var cancel = document.querySelector('#form_popup .cancel');
             var form_popup = document.querySelector('#form_popup');
@@ -117,21 +122,23 @@ function EditSuppilier() {
             }, 100);
 
 
-            // ---------------------------- save suppilier profile -------------------------------------------------//
+            // ---------------------------- save produce profile -------------------------------------------------//
             var save = document.querySelector('#form_popup .save');
             save.addEventListener('click', () => {
-                let id = document.querySelector('#form_popup #suppilier_id'),
-                    name = document.querySelector('#form_popup #suppilier_name'),
-                    address = document.querySelector('#form_popup #suppilier_address'),
-                    phone = document.querySelector('#form_popup #suppilier_phone');
+                let id = document.querySelector('#form_popup #discount_id'),
+                    name = document.querySelector('#form_popup #discount_name'),
+                    price_per = document.querySelector('#form_popup #discount_price_per'),
+                    start_date = document.querySelector('#form_popup #discount_start_date'),
+                    end_date = document.querySelector('#form_popup #discount_end_date');
                 data[1].textContent = name;
-                data[2].textContent = address;
-                data[3].textContent = phone;
+                data[2].textContent = price_per;
+                data[3].textContent = start_date;
+                data[4].textContent = end_date;
 
                 let xml = new XMLHttpRequest();
-                xml.open('POST', 'http://localhost/sieuthi_mini_api_php/api/suppilier/update.php');
+                xml.open('POST', 'http://localhost/sieuthi_mini_api_php/api/discount/update.php');
                 xml.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                xml.send(`id=${id}&name=${name}&address=${address}&phone=${phone}`)
+                xml.send(`id=${id}&name=${name}&price_per=${price_per}&start_date=${start_date}&end_date=${end_date}`)
                 xml.onload = function () {
                     console.log(this.response)
                 }
@@ -142,9 +149,8 @@ function EditSuppilier() {
 }
 
 
-
-function DeleteSuppilier() {
-    var deletes = document.querySelectorAll('#suppilier_container .delete');
+function DeleteDiscount() {
+    var deletes = document.querySelectorAll('#discount_container .delete');
     for (const del of deletes) {
         del.addEventListener('click', () => {
             let row = del.parentNode.parentNode;
@@ -152,7 +158,7 @@ function DeleteSuppilier() {
             if (confirm) {
                 row.parentNode.removeChild(row);
                 let xml = new XMLHttpRequest();
-                xml.open('POST', `http://localhost/sieuthi_mini_api_php/api/suppilier/delete.php`);
+                xml.open('POST', `http://localhost/sieuthi_mini_api_php/api/discount/delete.php`);
                 xml.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                 xml.send(`id=${del.value}`)
                 xml.onload = () => {
@@ -165,8 +171,8 @@ function DeleteSuppilier() {
 
 
 function searchTable() {
-    const search = document.querySelector('#suppilier_container .input-group input'),
-        table_rows = document.querySelectorAll('.suppilier_table tbody tr');
+    const search = document.querySelector('#discount_container .input-group input'),
+        table_rows = document.querySelectorAll('.discount_table tbody tr');
     // console.log(search.innerHTML);
 
     search.addEventListener('input', () => {
@@ -180,32 +186,34 @@ function searchTable() {
 
 
 
+
+
 //---------------------------- Active functions -------------------------------------//
-LoadSuppilier()
+LoadDiscount()
     .then(() => {
-        console.log(`Load suppilier table complete`);
-        EditSuppilier();
-        DeleteSuppilier();
+        console.log(`Load discount table complete`);
+        EditDiscount();
+        DeleteDiscount();
         searchTable();
     })
     .catch(() => {
-        console.log(`Load suppilier table fail`)
+        console.log(`Load discount table fail`)
     });
 
 
 function ReLoadCategory() {
-    var reload = document.querySelector('#suppilier_container .reload_suppilier')
+    var reload = document.querySelector('#discount_container .reload_discount')
     reload.addEventListener('click', () => {
-        document.querySelector('#suppilier_container .suppilier_table tbody').replaceChildren();
-        LoadSuppilier()
+        document.querySelector('#discount_container .discount_table tbody').replaceChildren();
+        LoadDiscount()
             .then(() => {
-                console.log(`Load suppilier table complete`);
-                EditSuppilier();
-                DeleteSuppilier();
+                console.log(`Load discount table complete`);
+                EditDiscount();
+                DeleteDiscount();
                 searchTable();
             })
             .catch(() => {
-                console.log(`Load suppilier table fail`)
+                console.log(`Load discount table fail`)
             });
     })
 }

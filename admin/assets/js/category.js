@@ -119,7 +119,8 @@ function EditCategory() {
                 let id = document.querySelector('#form_popup #category_id'),
                     name = document.querySelector('#form_popup #category_name'),
                     name_code = document.querySelector('#form_popup #category_name_code');
-
+                    data[1].textContent = name;
+                    data[2].textContent = name_code;
                 let xml = new XMLHttpRequest();
                 xml.open('POST', 'http://localhost/sieuthi_mini_api_php/api/category/update.php');
                 xml.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -243,7 +244,6 @@ LoadCategory()
         ViewCategory();
         DeleteCategory();
         searchTable();
-        AddCategory();
     })
     .catch(() => {
         console.log(`Load category table fail`)
@@ -261,7 +261,6 @@ function ReLoadCategory() {
                 ViewCategory();
                 DeleteCategory();
                 searchTable();
-                AddCategory();
             })
             .catch(() => {
                 console.log(`Load category table fail`)
