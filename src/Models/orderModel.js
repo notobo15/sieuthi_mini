@@ -10,7 +10,7 @@ orderModel.findByIdUser = () => {
         //   " JOIN order_detail T2 ON T1.order_id = T2.order_id" +
         //   " JOIN product T3 ON T3.product_id = T2.product_id" +
         //   " where user_id = ?",
-        `SELECT T1.order_id, t1.user_id, T1.status,COUNT(T2.quantity)* T2.price AS totalPrice, GROUP_CONCAT(T3.name, ' : ',  T2.quantity,' : ' ,'\n') as product_detail
+        `SELECT T1.order_id,T1.order_timestamp ,t1.user_id, T1.status,SUM(T2.quantity  * T2.price) AS totalPrice, GROUP_CONCAT(T3.name, ' : ',  T2.quantity,' : ' ,'\n') as product_detail
           FROM orders T1 
           JOIN order_detail T2 ON T1.order_id = T2.order_id 
           JOIN product T3 ON T3.product_id = T2.product_id 
@@ -148,6 +148,36 @@ orderModel.findByIdAndUpdate = async (order_id, { status }) => {
             resolve(rows);
           }
           connection.release(); // return the connection to pool
+        }
+      );
+    });
+  });
+};
+
+orderModel.getListOrderDetail = (order_id) => {
+  return new Promise((resolve, reject) => {
+    pool.getConnection((err, connection) => {
+      if (err) throw err;
+      connection.query(
+        // "SELECT t1.order_id, t1.user_id, t1.order_id, T1.status, t2.product_id, t2.price, t2.quantity, t3.name FROM orders T1" +
+        //   " JOIN order_detail T2 ON T1.order_id = T2.order_id" +
+        //   " JOIN product T3 ON T3.product_id = T2.product_id" +
+        //   " where user_id = ?",
+        `SELECT T3.name,T2.price,T3.img,T2.quantity,T3.product_id
+          FROM orders T1 
+          JOIN order_detail T2 ON T1.order_id = T2.order_id 
+          JOIN product T3 ON T3.product_id = T2.product_id 
+          where T1.order_id = ?`,
+          [order_id],
+        (err, rows) => {
+          connection.release(); // return the connection to pool
+          if (err) throw err;
+          if (rows.length !== 0) {
+            resolve(rows);
+            
+          } else {
+            resolve({ message: "unsuccess" });
+          }
         }
       );
     });

@@ -123,6 +123,13 @@ const getListOrder = async (req, res) => {
   let order = await orderModel.findByIdUser();
   return res.json(order);
 };
+
+const getListOrderDetail = async (req, res) => {
+  const { order_id } = req.params;
+  let order = await orderModel.getListOrderDetail(order_id);
+  console.log(order)
+  return res.json(order);
+};
 const createOrder = async (req, res) => {
   const order = await orderModel.create(req.user.user_id, req.body);
   console.log(order);
@@ -162,4 +169,5 @@ module.exports = {
   editOrder,
   updateMyself,
   deleteMyself,
+  getListOrderDetail
 };

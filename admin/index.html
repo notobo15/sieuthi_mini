@@ -15,11 +15,11 @@
     <link rel="stylesheet" href="assets/css/user.css">
     <link rel="stylesheet" href="assets/css/product.css">
     <link rel="stylesheet" href="assets/css/user_profile.css">
-    <link rel="stylesheet" href="assets/css/product_profile.css">
+    <link rel="stylesheet" href="assets/css/form_popup.css">
     <link rel="stylesheet" href="assets/css/order.css">
-
-
-
+    <link rel="stylesheet" href="assets/css/cart.css">
+    <link rel="stylesheet" href="assets/css/category.css">
+    <link rel="stylesheet" href="assets/css/suppilier.css">
 
 
 </head>
@@ -231,14 +231,6 @@
                     </div>
                     <div class="add_product_div">
                         <label for="export-file" class="add_product_btn" title="Export File"></label>
-                        <!-- <input type="checkbox" id="export-file"> -->
-                        <!-- <div class="export__file-options">
-                            <label>Export As &nbsp; &#10140;</label>
-                            <label for="export-file" id="toPDF">PDF <img src="assets/imgs/pdf.png" alt=""></label>
-                            <label for="export-file" id="toJSON">JSON <img src="assets/imgs/json.png" alt=""></label>
-                            <label for="export-file" id="toCSV">CSV <img src="assets/imgs/csv.png" alt=""></label>
-                            <label for="export-file" id="toEXCEL">EXCEL <img src="assets/imgs/excel.png" alt=""></label>
-                        </div> -->
                     </div>
                 </section>
                 <section class="product_table">
@@ -263,7 +255,7 @@
                 </section>
             </main>
 
-            <!--================================= Orders =======================================================-->
+            <!-- ================================= Orders ================================= -->
             <main id="order_container">
                 <section class="order_header">
                     <h1>Orders</h1>
@@ -271,8 +263,12 @@
                         <input type="search" placeholder="Search Data...">
                         <img src="assets/imgs/search.png" alt="">
                     </div>
-                    
+                    <div class="reload_order">
+                        <label for="" class="reload_order_btn" title=""></label>
+                    </div>
                 </section>
+
+
                 <section class="order_table">
                     <table>
                         <thead>
@@ -280,15 +276,125 @@
                                 <th>Order Time<span class="icon-arrow">&UpArrow;</span></th>
                                 <th>Order Id<span class="icon-arrow">&UpArrow;</span></th>
                                 <th>User Id<span class="icon-arrow">&UpArrow;</span></th>
+                                <th>totalPrice<span class="icon-arrow">&UpArrow;</span></th>
                                 <th>Status<span class="icon-arrow">&UpArrow;</span></th>
                                 <th>Actions<span class="icon-arrow">&UpArrow;</span></th>
                             </tr>
                         </thead>
                         <tbody>
+
                         </tbody>
                     </table>
                 </section>
             </main>
+
+
+            <!-- ================================= Category ================================= -->
+            <main id="category_container">
+                <section class="category_header">
+                    <h1>Categories</h1>
+                    <div class="input-group">
+                        <input type="search" placeholder="Search Data...">
+                        <img src="assets/imgs/search.png" alt="">
+                    </div>
+                    <div class="reload_category">
+                        <label for="" class="reload_category_btn" title=""></label>
+                    </div>
+                </section>
+                <section class="category_table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Id<span class="icon-arrow">&UpArrow;</span></th>
+                                <th>Name<span class="icon-arrow">&UpArrow;</span></th>
+                                <th>Name_code<span class="icon-arrow">&UpArrow;</span></th>
+                                <th>isDeleted<span class="icon-arrow">&UpArrow;</span></th>
+                                <th>Actions<span class="icon-arrow">&UpArrow;</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>${orders[0].order_timestamp}</td>
+                                <td>${orders[0].order_id}</td>
+                                <td>${orders[0].user_id}</td>
+                                <td>${orders[0].totalPrice}</td>
+                                <td>
+                                    <button class="edit" value="${orders[0].order_id}">Edit</button>
+                                    <button class="view" value="${orders[0].order_id}">View</button>
+                                    <button class="delete" value="${orders[0].order_id}">Delete</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+            </main>
+
+
+             <!-- ================================= Suppilier ================================= -->
+             <main id="suppilier_container">
+                <section class="suppilier_header">
+                    <h1>Suppilier</h1>
+                    <div class="input-group">
+                        <input type="search" placeholder="Search Data...">
+                        <img src="assets/imgs/search.png" alt="">
+                    </div>
+                    <div class="reload_suppilier">
+                        <label for="" class="reload_suppilier_btn" title=""></label>
+                    </div>
+                </section>
+                <section class="suppilier_table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Id<span class="icon-arrow">&UpArrow;</span></th>
+                                <th>Name<span class="icon-arrow">&UpArrow;</span></th>
+                                <th>Address<span class="icon-arrow">&UpArrow;</span></th>
+                                <th>Phone<span class="icon-arrow">&UpArrow;</span></th>
+                                <th>isDeleted<span class="icon-arrow">&UpArrow;</span></th>
+                                <th>Actions<span class="icon-arrow">&UpArrow;</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>abc</td>
+                                <td>asd</td>
+                                <td>asd</td>
+                                <td>asd</td>
+                                <td>
+                                    <button class="edit" value="${orders[0].order_id}">Edit</button>
+                                    <button class="delete" value="${orders[0].order_id}">Delete</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+            </main>
+
+            <!-- <div id="form_popup">
+                <div class="close">&times;</div>
+                <div class="form_profile" >
+                    
+                    <div class="form_ele">
+                        <label for="product_id">Id</label>
+                        <input type="text" name="product_id" id="" value="${data.product_id}">
+                    </div>
+                    <div class="form_ele">
+                        <label for="product_name">Name</label>
+                        <input type="text" name="product_name" id="" value="${data.name}">
+                    </div>
+                    <div class="form_ele">
+                        <label for="product_slug">Slug:</label>
+                        <input type="text" name="product_slug" id="" value="${data.slug}">
+                    </div>  
+                    <div class="form_footer">
+                        <Button class="save">Save</Button>
+                        <Button class="cancel">Cancel</Button>
+                    </div> 
+                </div>
+            </div> -->
+
+
 
 
         </div>
@@ -301,6 +407,9 @@
         <script src="assets/js/user.js"></script>
         <script src="assets/js/product.js"></script>
         <script src="assets/js/order.js"></script>
+        <script src="assets/js/category.js"></script>
+        <script src="assets/js/suppilier.js"></script>
+
 
 
 

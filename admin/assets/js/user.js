@@ -289,9 +289,3 @@ DeleteUser();
 AddUser();
 search();
 
-// var modal = document.getElementById("user_profile");
-// // window.onclick = function(event) {
-// //     if (modal.style.display === 'none' ) {
-// //         modal.style.display = "flex";
-// //     }
-// // }

@@ -112,66 +112,68 @@ function EditProduct() {
 
             // ---------------------------- Load form -------------------------------------------------//
             const doc = document.querySelector('.main');
-            if (doc.querySelector('#product_profile_popup') !== null) {
-                var rm = doc.querySelector('#product_profile_popup');
+            if (doc.querySelector('#form_popup') !== null) {
+                var rm = doc.querySelector('#form_popup');
                 doc.removeChild(rm);
             }
 
             var xml = new XMLHttpRequest();
+            xml.open("GET", `http://localhost:3000/api/product/${edit.value}`);
+            xml.send();
             xml.onload = function () {
                 var data = JSON.parse(this.responseText);
                 // console.log(data);
                 var html = document.createElement('div');
-                html.id = "product_profile_popup";
+                html.id = "form_popup";
                 html.innerHTML = `
                 <div class="close">&times;</div>
-                <div class="product_profile">
+                <div class="form_profile">
                     <img src="http://localhost:3000/img/products/${data.img}" alt="">
-                    <div class="product_ele">
+                    <div class="form_ele">
                         <label for="product_id">Id</label>
                         <input type="text" name="product_id" id="" value="${data.product_id}">
                     </div>
-                    <div class="product_ele">
+                    <div class="form_ele">
                         <label for="product_name">Name</label>
                         <input type="text" name="product_name" id="" value="${data.name}">
                     </div>
-                    <div class="product_ele">
+                    <div class="form_ele">
                         <label for="product_slug">Slug:</label>
                         <input type="text" name="product_slug" id="" value="${data.slug}">
                     </div>
-                    <div class="product_ele">
+                    <div class="form_ele">
                         <label for="product_description">Description</label>
                         <textarea name="product_description" id="" >${data.description}</textarea>
                     </div>
-                    <div class="product_ele">
+                    <div class="form_ele">
                         <label for="product_price">Price</label>
                         <input type="text" name="product_price" id="" value="${data.price}">
                     </div>
-                    <div class="product_ele">
+                    <div class="form_ele">
                         <label for="product_mass">Mass</label>
                         <input type="text" name="product_mass" id="" value="${data.mass}">
                     </div>
-                    <div class="product_ele">
+                    <div class="form_ele">
                         <label for="product_ingredient">Ingerdient</label>
                         <textarea name="product_ingredient" id="">${data.ingredient}</textarea>
                     </div>
-                    <div class="product_ele">
+                    <div class="form_ele">
                         <label for="product_htu">HowToUse</label>
                         <input type="text" name="product_htu" id="" value="${data.how_to_use}">
                     </div>
-                    <div class="product_ele">
+                    <div class="form_ele">
                         <label for="product_preserve">Preserve</label>
                         <textarea name="product_preserve" id="">${data.preserve}</textarea>
                     </div>
-                    <div class="product_ele">
+                    <div class="form_ele">
                         <label for="product_trademark">Trademark</label>
                         <input type="text" name="product_trademark" id="" value="${data.trademark}">
                     </div>
-                    <div class="product_ele">
+                    <div class="form_ele">
                         <label for="product_markin">Markin</label>
                         <input type="text" name="product_markin" id="" value="${data.make_in}">
                     </div>
-                    <div class="product_ele">
+                    <div class="form_ele">
                         <label for="product_cate">Category</label>
                         <select name="product_cate" id="product_cate" class="" >
                             <option value="1">Mì, hủ tiếu, phở gói</option>
@@ -190,7 +192,7 @@ function EditProduct() {
                             <option value="21">Nồi, niêu, xoong, chảo"</option>
                         </select>
                     </div>
-                    <div class="product_footer">
+                    <div class="form_footer">
                         <button class="save" disabled style="pointer-events: none">Save</button>
                         <Button class="cancel">Cancel</Button>
                     </div>
@@ -204,9 +206,12 @@ function EditProduct() {
                 })
                 document.querySelector('.main').appendChild(html);
 
+
+                
+
                 // ---------------------------- Disable save button -------------------------------------------------//
 
-                var a = doc.querySelector('#product_profile_popup');
+                var a = doc.querySelector('#form_popup');
                 a.addEventListener('input', () => {
                     let save = a.querySelector('.save');
                     save.disabled = false;
@@ -215,28 +220,26 @@ function EditProduct() {
 
 
                 // ---------------------------- Close produce profile -------------------------------------------------//
-                var close = document.querySelector('#product_profile_popup .close');
-                var cancel = document.querySelector('#product_profile_popup .cancel');
-                var product_profile = document.querySelector('#product_profile_popup');
+                var close = document.querySelector('#form_popup .close');
+                var cancel = document.querySelector('#form_popup .cancel');
+                var form_profile = document.querySelector('#form_popup');
 
                 close.addEventListener('click', () => {
-                    document.querySelector('.main').removeChild(product_profile);
+                    document.querySelector('.main').removeChild(form_profile);
                 });
 
                 cancel.addEventListener('click', () => {
-                    document.querySelector('.main').removeChild(product_profile);
+                    document.querySelector('.main').removeChild(form_profile);
                 })
 
 
 
                 // ---------------------------- save produce profile -------------------------------------------------//
-                var close = document.querySelector('#product_profile_popup .save');
+                var close = document.querySelector('#form_popup .save');
 
 
             }
 
-            xml.open("GET", `http://localhost:3000/api/product/${edit.value}`, false);
-            xml.send();
         })
     })
 }
@@ -246,62 +249,62 @@ function AddProduct() {
 
     add.addEventListener('click', () => {
         const doc = document.querySelector('.main');
-        if (doc.querySelector('#product_profile_popup') !== null) {
-            var rm = doc.querySelector('#product_profile_popup');
+        if (doc.querySelector('#form_popup') !== null) {
+            var rm = doc.querySelector('#form_popup');
             doc.removeChild(rm);
         }
 
         var html = document.createElement('div');
-        html.id = "product_profile_popup";
+        html.id = "form_popup";
         html.innerHTML = `
                 <div class="close">&times;</div>
-                <div class="product_profile">
+                <div class="form_profile">
                     <img src="http://localhost:3000/img/products/gia-vi-hoan-chinh-dang-xot-thit-kho-trung-chinsu-goi-70g-201905240016431259.jpg" alt="">
-                    <div class="product_ele">
+                    <div class="form_ele">
                         <label for="product_id">Id</label>
                         <input type="text" name="product_id" id="" value="">
                     </div>
-                    <div class="product_ele">
+                    <div class="form_ele">
                         <label for="product_name">Name</label>
                         <input type="text" name="product_name" id="" value="">
                     </div>
-                    <div class="product_ele">
+                    <div class="form_ele">
                         <label for="product_slug">Slug:</label>
                         <input type="text" name="product_slug" id="" value="">
                     </div>
-                    <div class="product_ele">
+                    <div class="form_ele">
                         <label for="product_description">Description</label>
                         <textarea name="product_description" id="" ></textarea>
                     </div>
-                    <div class="product_ele">
+                    <div class="form_ele">
                         <label for="product_price">Price</label>
                         <input type="text" name="product_price" id="" value="">
                     </div>
-                    <div class="product_ele">
+                    <div class="form_ele">
                         <label for="product_mass">Mass</label>
                         <input type="text" name="product_mass" id="" value="">
                     </div>
-                    <div class="product_ele">
+                    <div class="form_ele">
                         <label for="product_ingredient">Ingerdient</label>
                         <textarea name="product_ingredient" id=""></textarea>
                     </div>
-                    <div class="product_ele">
+                    <div class="form_ele">
                         <label for="product_htu">HowToUse</label>
                         <input type="text" name="product_htu" id="" value="">
                     </div>
-                    <div class="product_ele">
+                    <div class="form_ele">
                         <label for="product_preserve">Preserve</label>
                         <textarea name="product_preserve" id=""></textarea>
                     </div>
-                    <div class="product_ele">
+                    <div class="form_ele">
                         <label for="product_trademark">Trademark</label>
                         <input type="text" name="product_trademark" id="" value="">
                     </div>
-                    <div class="product_ele">
+                    <div class="form_ele">
                         <label for="product_markin">Markin</label>
                         <input type="text" name="product_markin" id="" value="">
                     </div>
-                    <div class="product_ele">
+                    <div class="form_ele">
                         <label for="product_cate">Category</label>
                         <select name="product_cate" id="product_cate" class="" >
                             <option value="1">Mì, hủ tiếu, phở gói</option>
@@ -320,7 +323,7 @@ function AddProduct() {
                             <option value="21">Nồi, niêu, xoong, chảo"</option>
                         </select>
                     </div>
-                    <div class="product_footer">
+                    <div class="form_footer">
                         <button class="add">Add</button>
                         <Button class="cancel">Cancel</Button>
                     </div>
@@ -331,16 +334,16 @@ function AddProduct() {
 
 
         // ---------------------------- Close produce profile -------------------------------------------------//
-        var close = document.querySelector('#product_profile_popup .close');
-        var cancel = document.querySelector('#product_profile_popup .cancel');
-        var product_profile = document.querySelector('#product_profile_popup');
+        var close = document.querySelector('#form_popup .close');
+        var cancel = document.querySelector('#form_popup .cancel');
+        var form_profile = document.querySelector('#form_popup');
 
         close.addEventListener('click', () => {
-            document.querySelector('.main').removeChild(product_profile);
+            document.querySelector('.main').removeChild(form_profile);
         });
 
         cancel.addEventListener('click', () => {
-            document.querySelector('.main').removeChild(product_profile);
+            document.querySelector('.main').removeChild(form_profile);
         })
 
 

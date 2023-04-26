@@ -23,5 +23,5 @@ router.post("/empty-cart", auth, checkPermission, userCtrl.emptyCart); // xoa ta
 
 router.post("/order", auth, checkPermission, userCtrl.createOrder); // tao don hang
 router.post("/order/edit/:order_id",  userCtrl.editOrder); // edit trang thai don hang
-
+router.get("/order/:order_id",  userCtrl.getListOrderDetail);
 module.exports = router;
