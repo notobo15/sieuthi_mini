@@ -106,7 +106,7 @@
 
 #user_table th {
     /* position: sticky; */
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     /* cursor: pointer; */
     /* top: 0;
     left: 0; */
@@ -114,13 +114,13 @@
 }
 
 #user_table td {
-    font-size: 1rem;
+    font-size: 0.9rem;
 }
 
 table,
 th,
 td {
-    padding: 1rem;
+    padding: .8rem;
     border-collapse: collapse;
 }
 
@@ -137,13 +137,27 @@ td {
     /* white-space: normal ; */
 }
 
-#user_table table tr td:nth-child(2) {
+#user_table table  td:nth-child(2) {
     font-weight: 700;
     color: rgb(5, 56, 150);
 }
 
-#user_table table tr td:nth-child(6) {
-    width: 15%;
+#user_table table  td:nth-child(1) {
+    width: 5%;
+}
+
+#user_table table  td:nth-child(2) {
+    width: 5%;
+}
+#user_table table  td:nth-child(3) {
+    width: 5%;
+}
+
+#user_table table  td:nth-child(5) {
+    width: 5%;
+}
+#user_table table  td:nth-child(7) {
+    width: 5%;
 }
 
 #user_table table tr:nth-child(even) {
@@ -212,12 +226,7 @@ td {
     background-color: rgb(2, 247, 35);
 }
 
-.user_setting button:nth-child(2){
-    background-color: rgb(134, 136, 134);
-
-}
-
-.user_setting button:nth-child(3) {
+.user_setting button:nth-child(2) {
     background-color: rgb(245, 3, 3);
     
 
@@ -229,11 +238,6 @@ td {
 
 
 .user_setting button:nth-child(2):hover {
-    background-color: rgb(67, 75, 67);
-
-}
-
-.user_setting button:nth-child(3):hover {
     background-color: rgb(236, 100, 100);
 }
 
