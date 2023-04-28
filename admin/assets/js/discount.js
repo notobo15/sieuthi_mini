@@ -53,31 +53,35 @@ function EditDiscount() {
 
             var data = edit.parentNode.parentNode.querySelectorAll('td');
             // console.log(data);
-            var html = document.createElement('div');
+            var html = document.createElement('form');
             html.id = "form_popup";
             html.innerHTML = `
                 <div class="close">&times;</div>
                 <div class="form_profile" >
                     
                     <div class="form_ele">
-                        <label for="discount_id">Id</label>
-                        <input type="text" name="discount_id" id="discount_id" value="${data[0].textContent}">
+                        <label for="id">Id</label>
+                        <input type="text" name="id" id="" value="${data[0].textContent}">
                     </div>
                     <div class="form_ele">
-                        <label for="discount_name">Name</label>
-                        <input type="text" name="discount_name" id="discount_name" value="${data[1].textContent}">
+                        <label for="name">Name</label>
+                        <input type="text" name="name" id="" value="${data[1].textContent}">
                     </div>
                     <div class="form_ele">
-                        <label for="discount_price_per">Name_code</label>
-                        <input type="text" name="discount_price_per" id="discount_price_per" value="${data[2].textContent}">
+                        <label for="price_per">price_per</label>
+                        <input type="text" name="price_per" id="" value="${data[2].textContent}">
                     </div>
                     <div class="form_ele">
-                        <label for="discount_start_date">Name_code</label>
-                        <input type="text" name="discount_start_date" id="discount_start_date" value="${data[3].textContent}">
+                        <label for="product_id">product_id</label>
+                        <input type="text" name="product_id" id="" value="">
+                    </div>
+                    <div class="form_ele">
+                        <label for="start_date">start_date</label>
+                        <input type="text" name="start_date" id="" value="${data[3].textContent}">
                     </div>  
                     <div class="form_ele">
-                        <label for="discount_end_date">Name_code</label>
-                        <input type="text" name="discount_end_date" id="discount_end_date" value="${data[4].textContent}">
+                        <label for="end_date">end_date</label>
+                        <input type="text" name="end_date" id="" value="${data[4].textContent}">
                     </div>    
                     <div class="form_footer">
                         <Button class="save" disabled style="pointer-events: none">Save</Button>
@@ -123,25 +127,19 @@ function EditDiscount() {
 
 
             // ---------------------------- save produce profile -------------------------------------------------//
-            var save = document.querySelector('#form_popup .save');
-            save.addEventListener('click', () => {
-                let id = document.querySelector('#form_popup #discount_id'),
-                    name = document.querySelector('#form_popup #discount_name'),
-                    price_per = document.querySelector('#form_popup #discount_price_per'),
-                    start_date = document.querySelector('#form_popup #discount_start_date'),
-                    end_date = document.querySelector('#form_popup #discount_end_date');
-                data[1].textContent = name;
-                data[2].textContent = price_per;
-                data[3].textContent = start_date;
-                data[4].textContent = end_date;
-
-                let xml = new XMLHttpRequest();
-                xml.open('POST', 'http://localhost/sieuthi_mini_api_php/api/discount/update.php');
-                xml.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                xml.send(`id=${id}&name=${name}&price_per=${price_per}&start_date=${start_date}&end_date=${end_date}`)
-                xml.onload = function () {
-                    console.log(this.response)
-                }
+            var form = document.querySelector('#form_popup');
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const fd = new FormData(form);
+                fetch('http://localhost/sieuthi_mini_api_php/api/discount/update.php',
+                    {
+                        method: 'post',
+                        body: fd,
+                    }
+                )
+                    .then(res => res.text())
+                    .then(res => console.log(res))
+                    .catch(err => console.log(err))
             })
 
         })

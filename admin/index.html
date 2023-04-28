@@ -135,13 +135,12 @@
                                 <th>Id</th>
                                 <th>Account</th>
                                 <th>Name</th>
-                                <th>Phone</th>
-                                <th>Birthdate</th>
+                                <th>Password</th>
+                                <th>Name</th>
                                 <th>Address</th>
-                                <th>Sex</th>
-
+                                <th>Gender</th>
                                 <th>Role</th>
-                                <th>Status</th>
+                                <th>isDeleted</th>
                                 <th>Setting</th>
 
                             </tr>
@@ -315,7 +314,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                            <!-- <tr>
                                 <td>${orders[0].order_timestamp}</td>
                                 <td>${orders[0].order_id}</td>
                                 <td>${orders[0].user_id}</td>
@@ -325,7 +324,7 @@
                                     <button class="view" value="${orders[0].order_id}">View</button>
                                     <button class="delete" value="${orders[0].order_id}">Delete</button>
                                 </td>
-                            </tr>
+                            </tr> -->
                         </tbody>
                     </table>
                 </section>
@@ -366,7 +365,7 @@
              <!-- ================================= Discount ================================= -->
              <main id="discount_container">
                 <section class="discount_header">
-                    <h1>Suppilier</h1>
+                    <h1>Discount</h1>
                     <div class="input-group">
                         <input type="search" placeholder="Search Data...">
                         <img src="assets/imgs/search.png" alt="">
@@ -389,7 +388,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                            <!-- <tr>
                                 <td>1</td>
                                 <td>2</td>
                                 <td>giam 5%</td>
@@ -400,7 +399,7 @@
                                     <button class="edit" value="${orders[0].order_id}">Edit</button>
                                     <button class="delete" value="${orders[0].order_id}">Delete</button>
                                 </td>
-                            </tr>
+                            </tr> -->
                         </tbody>
                     </table>
                 </section>
@@ -412,7 +411,7 @@
                     
                     <div class="form_ele">
                         <label for="product_id">Id</label>
-                        <input type="text" name="product_id" id="" value="${data.product_id}">
+                        <input type="text" name="product_id" id="" value="${data.product_id}" accept="image/*">
                     </div>
                     <div class="form_ele">
                         <label for="product_name">Name</label>

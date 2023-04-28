@@ -9,22 +9,22 @@ function LoadOrder() {
         xml.send();
         xml.onload = function () {
             let orders = JSON.parse(this.responseText);
-            var html = document.createElement('tr');
-            html.innerHTML = ` <td>${orders[0].order_timestamp}</td>
-                                <td>${orders[0].order_id}</td>
-                                <td>${orders[0].user_id}</td>
-                                <td>${orders[0].totalPrice}</td>
-                                <td>
-                                    <p class="status ${orders[0].status}">${orders[0].status}</p>
-                                </td>
-                                <td>
-                                    <button class="approve" value="${orders[0].order_id}">Approve</button>
-                                    <button class="view" value="${orders[0].order_id}">View</button>
-                                    <button class="delay" value="${orders[0].order_id}">Delay</button>
-                                </td>`;
-
-            document.querySelector('#order_container .order_table tbody').append(html);
-
+            let html =``;
+            for(const order of orders) {
+                html += `<tr><td>${order.order_date}</td>
+                <td>${order.id}</td>
+                <td>${order.account_id}</td>
+                <td>${order.totalPrice}</td>
+                <td>
+                    <p class="status  ${order.status.toLowerCase()}">${order.status}</p>
+                </td>
+                <td>
+                    <button class="approve" value="${order.id}">Approve</button>
+                    <button class="view" value="${order.id}">View</button>
+                    <button class="delay" value="${order.id}">Delay</button>
+                </td></tr>`;
+            }
+            document.querySelector('#order_container .order_table tbody').innerHTML = html;
             resolve();
         }
 
@@ -57,7 +57,7 @@ function Approve() {
             let xml = new XMLHttpRequest();
             xml.open('POST', `http://localhost:3000/api/user/order/edit/${approve.value}`)
             xml.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            xml.send('status=approved')
+            xml.send('status=Approved')
             xml.onload = function () {
                 if (this.status === 200) {
                     console.log(`Order approved complete - ${xml.statusText}`)
@@ -80,8 +80,8 @@ function View() {
                 let rows = ``;
                 for (const cart of carts) {
                     rows += ` <tr>
-                         <td> ${cart.product_id} </td>
-                         <td><img src="http://localhost:3000/img/products/${cart.img}" alt=""></td>
+                         <td> ${cart.id} </td>
+                         <td><img src="http://localhost/sieuthi_mini_api_php/images/products/${cart.img}" alt=""></td>
                          <td>${cart.name}</td>
                          <td> ${cart.price} </td>
                          <td> <p class="status pending">${cart.quantity}</p></td>
@@ -145,7 +145,7 @@ function Delay() {
             let xml = new XMLHttpRequest();
             xml.open('POST', `http://localhost:3000/api/user/order/edit/${delay.value}`)
             xml.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            xml.send('status=delayed')
+            xml.send('status=Delayed')
             xml.onload = function () {
                 if (this.status === 200) {
                     console.log(`Order delay complete - ${xml.statusText}`)

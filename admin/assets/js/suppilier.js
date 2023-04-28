@@ -59,20 +59,20 @@ function EditSuppilier() {
                 <div class="form_profile" >
                     
                     <div class="form_ele">
-                        <label for="suppilier_id">Id</label>
-                        <input type="text" name="suppilier_id" id="suppilier_id" value="${data[0].textContent}">
+                        <label for="id">Id</label>
+                        <input type="text" name="id" id="suppilier_id" value="${data[0].textContent}">
                     </div>
                     <div class="form_ele">
-                        <label for="suppilier_name">Name</label>
-                        <input type="text" name="suppilier_name" id="suppilier_name" value="${data[1].textContent}">
+                        <label for="name">Name</label>
+                        <input type="text" name="name" id="suppilier_name" value="${data[1].textContent}">
                     </div>
                     <div class="form_ele">
-                        <label for="suppilier_address">Name_code</label>
-                        <input type="text" name="suppilier_address" id="suppilier_address" value="${data[2].textContent}">
+                        <label for="address">Address</label>
+                        <input type="text" name="address" id="suppilier_address" value="${data[2].textContent}">
                     </div>  
                     <div class="form_ele">
-                        <label for="suppilier_phone">Name_code</label>
-                        <input type="text" name="suppilier_phone" id="suppilier_phone" value="${data[3].textContent}">
+                        <label for="phone">phone</label>
+                        <input type="text" name="phone" id="suppilier_phone" value="${data[3].textContent}">
                     </div>  
                     <div class="form_footer">
                         <Button class="save" disabled style="pointer-events: none">Save</Button>
@@ -118,30 +118,24 @@ function EditSuppilier() {
 
 
             // ---------------------------- save suppilier profile -------------------------------------------------//
-            var save = document.querySelector('#form_popup .save');
-            save.addEventListener('click', () => {
-                let id = document.querySelector('#form_popup #suppilier_id'),
-                    name = document.querySelector('#form_popup #suppilier_name'),
-                    address = document.querySelector('#form_popup #suppilier_address'),
-                    phone = document.querySelector('#form_popup #suppilier_phone');
-                data[1].textContent = name;
-                data[2].textContent = address;
-                data[3].textContent = phone;
-
-                let xml = new XMLHttpRequest();
-                xml.open('POST', 'http://localhost/sieuthi_mini_api_php/api/suppilier/update.php');
-                xml.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                xml.send(`id=${id}&name=${name}&address=${address}&phone=${phone}`)
-                xml.onload = function () {
-                    console.log(this.response)
-                }
+            var form = document.querySelector('#form_popup');
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const fd = new FormData(form);
+                fetch('http://localhost/sieuthi_mini_api_php/api/suppilier/update.php',
+                    {
+                        method: 'post',
+                        body: fd,
+                    }
+                )
+                    .then(res => res.text())
+                    .then(res => console.log(res))
+                    .catch(err => console.log(err))
             })
 
         })
     }
 }
-
-
 
 function DeleteSuppilier() {
     var deletes = document.querySelectorAll('#suppilier_container .delete');

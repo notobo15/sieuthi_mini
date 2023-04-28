@@ -59,16 +59,16 @@ function EditCategory() {
                 <div class="form_profile" >
                     
                     <div class="form_ele">
-                        <label for="category_id">Id</label>
-                        <input type="text" name="category_id" id="category_id" value="${data[0].textContent}">
+                        <label for="id">Id</label>
+                        <input type="text" name="id" id="category_id" value="${data[0].textContent}">
                     </div>
                     <div class="form_ele">
-                        <label for="category_name">Name</label>
-                        <input type="text" name="category_name" id="category_name" value="${data[1].textContent}">
+                        <label for="name">Name</label>
+                        <input type="text" name="name" id="name" value="${data[1].textContent}">
                     </div>
                     <div class="form_ele">
-                        <label for="category_name_code">Name_code</label>
-                        <input type="text" name="category_name_code" id="category_name_code" value="${data[2].textContent}">
+                        <label for="name_code">Name_code</label>
+                        <input type="text" name="name_code" id="name_code" value="${data[2].textContent}">
                     </div>  
                     <div class="form_footer">
                         <Button class="save" disabled style="pointer-events: none">Save</Button>
@@ -114,20 +114,19 @@ function EditCategory() {
 
 
             // ---------------------------- save produce profile -------------------------------------------------//
-            var save = document.querySelector('#form_popup .save');
-            save.addEventListener('click', () => {
-                let id = document.querySelector('#form_popup #category_id'),
-                    name = document.querySelector('#form_popup #category_name'),
-                    name_code = document.querySelector('#form_popup #category_name_code');
-                    data[1].textContent = name;
-                    data[2].textContent = name_code;
-                let xml = new XMLHttpRequest();
-                xml.open('POST', 'http://localhost/sieuthi_mini_api_php/api/category/update.php');
-                xml.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                xml.send(`id=${id}&name=${name}&name_code=${name_code}`)
-                xml.onload = function () {
-                    console.log(this.response)
-                }
+            var form = document.querySelector('#form_popup');
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const fd = new FormData(form);
+                fetch('http://localhost/sieuthi_mini_api_php/api/category/update.php',
+                    {
+                        method: 'post',
+                        body: fd,
+                    }
+                )
+                    .then(res => res.text())
+                    .then(res => console.log(res))
+                    .catch(err => console.log(err))
             })
 
         })
@@ -148,7 +147,7 @@ function ViewCategory() {
                 for (const product of category.products) {
                     rows += ` <tr>
                          <td> ${product.id} </td>
-                         <td><img src="http://localhost:3000/img/products/${product.img}" alt=""></td>
+                         <td><img src="http://localhost/sieuthi_mini_api_php/images/products/${product.img}" alt=""></td>
                          <td>${product.name}</td>
                          <td> ${product.price} </td>
                          <td> <p class="status pending">${product.quantity}</p></td>
