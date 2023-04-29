@@ -52,7 +52,7 @@ function EditSuppilier() {
 
             var data = edit.parentNode.parentNode.querySelectorAll('td');
             // console.log(data);
-            var html = document.createElement('div');
+            var html = document.createElement('form');
             html.id = "form_popup";
             html.innerHTML = `
                 <div class="close">&times;</div>
@@ -158,7 +158,7 @@ function DeleteSuppilier() {
 }
 
 
-function searchTable() {
+function searchSuppilier() {
     const search = document.querySelector('#suppilier_container .input-group input'),
         table_rows = document.querySelectorAll('.suppilier_table tbody tr');
     // console.log(search.innerHTML);
@@ -180,14 +180,14 @@ LoadSuppilier()
         console.log(`Load suppilier table complete`);
         EditSuppilier();
         DeleteSuppilier();
-        searchTable();
+        searchSuppilier();
     })
     .catch(() => {
         console.log(`Load suppilier table fail`)
     });
 
 
-function ReLoadCategory() {
+function ReLoadSuppilier() {
     var reload = document.querySelector('#suppilier_container .reload_suppilier')
     reload.addEventListener('click', () => {
         document.querySelector('#suppilier_container .suppilier_table tbody').replaceChildren();
@@ -204,4 +204,4 @@ function ReLoadCategory() {
     })
 }
 
-ReLoadCategory();
+ReLoadSuppilier();

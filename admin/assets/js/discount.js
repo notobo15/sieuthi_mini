@@ -168,7 +168,7 @@ function DeleteDiscount() {
 }
 
 
-function searchTable() {
+function SearchDiscount() {
     const search = document.querySelector('#discount_container .input-group input'),
         table_rows = document.querySelectorAll('.discount_table tbody tr');
     // console.log(search.innerHTML);
@@ -181,23 +181,6 @@ function searchTable() {
         })
     });
 }
-
-
-
-
-
-//---------------------------- Active functions -------------------------------------//
-LoadDiscount()
-    .then(() => {
-        console.log(`Load discount table complete`);
-        EditDiscount();
-        DeleteDiscount();
-        searchTable();
-    })
-    .catch(() => {
-        console.log(`Load discount table fail`)
-    });
-
 
 function ReLoadCategory() {
     var reload = document.querySelector('#discount_container .reload_discount')
@@ -215,5 +198,22 @@ function ReLoadCategory() {
             });
     })
 }
+
+
+
+//---------------------------- Active functions -------------------------------------//
+LoadDiscount()
+    .then(() => {
+        console.log(`Load discount table complete`);
+        EditDiscount();
+        DeleteDiscount();
+        SearchDiscount();
+    })
+    .catch(() => {
+        console.log(`Load discount table fail`)
+    });
+
+
+
 
 ReLoadCategory();

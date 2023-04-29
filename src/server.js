@@ -33,7 +33,7 @@ app.get("/ok", (req, res) => {
   res.send("ok");
 });
 app.use(notFound);
-const port = 3000;
+const port = 3001;
 pool.getConnection(async (err, con) => {
   if (err) {
     console.log(err);

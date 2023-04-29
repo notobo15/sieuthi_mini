@@ -51,26 +51,7 @@ function LoadProduct() {
 
 // 1. Searching for specific data of HTML table
 
-function searchTable() {
-    const search = document.querySelector('#product_container .input-group input'),
-        table_rows = document.querySelectorAll('.product_table tbody tr');
-    // console.log(search.innerHTML);
 
-    search.addEventListener('input', () => {
-        table_rows.forEach((row, i) => {
-            let table_data = row.textContent.toLowerCase(),
-                search_data = search.value.toLowerCase();
-
-            row.classList.toggle('hide', table_data.indexOf(search_data) < 0);
-            // row.style.setProperty('--delay', i / 25 + 's');
-        })
-
-        // document.querySelectorAll('.product_table tbody tr:not(.hide)').forEach((visible_row, i) => {
-        //     visible_row.style.backgroundColor = (i % 2 === 0) ? 'transparent' : '#0000000b';
-        // });
-    });
-
-}
 
 
 
@@ -99,9 +80,10 @@ function EditProduct() {
                 // console.log(data);
                 var html = document.createElement('form');
                 html.id = "form_popup";
+                html.enctype = "multipart/form-data";
                 html.innerHTML = `
                 <div class="close">&times;</div>
-                <form class="form_profile" enctype="multipart/form-data">
+                <div class="form_profile" >
                     <img src="http://localhost/sieuthi_mini_api_php/images/products/${data.img}" alt="" id="main-img">
                     <div class="form_ele">
                         <label for="img">Main image</label>
@@ -192,7 +174,7 @@ function EditProduct() {
                         <button class="save" disabled style="pointer-events: none" type="submit">Save</button>
                         <Button class="cancel">Cancel</Button>
                     </div>
-                </form>  
+                </div>  
                 `;
                 // ---------------------------- Set selected ---------------------------------------/
                 html.querySelector('#category_id').value = data.category_id;
@@ -280,11 +262,12 @@ function AddProduct() {
 
 
         // console.log(data);
-        var html = document.createElement('div');
+        var html = document.createElement('form');
+        html.enctype = "multipart/form-data"
         html.id = "form_popup";
         html.innerHTML = `
              <div class="close">&times;</div>
-             <form class="form_profile" enctype="multipart/form-data">
+             <div class="form_profile" >
                  <img src="http://localhost/sieuthi_mini_api_php/images/not-found-product.jpg" alt="" id="main-img">
                  <div class="form_ele">
                      <label for="img">Main image</label>
@@ -363,7 +346,7 @@ function AddProduct() {
                      <button class="add" disabled style="pointer-events: none" type="submit">Add</button>
                      <Button class="cancel">Cancel</Button>
                  </div>
-             </form>  
+             </div>  
              `;
 
         // ---------------------------- Show form popup ---------------------------------------/
@@ -518,67 +501,48 @@ function DeleteProduct() {
 }
 
 
+function searchProduct() {
+    let search = document.querySelector('#product_container .input-group input'),
+        table_rows = document.querySelectorAll('.product_table tbody tr');
+    // console.log(search.innerHTML);
+
+    search.addEventListener('input', () => {
+        table_rows.forEach((row, i) => {
+            let table_data = row.textContent.toLowerCase(),
+                search_data = search.value.toLowerCase();
+
+            row.classList.toggle('hide', table_data.indexOf(search_data) < 0);
+        })
+    });
+}
 
 
+function ReLoadProduct() {
+    var reload = document.querySelector('#product_container .reload_product_btn')
+    reload.addEventListener('click', () => {
+        document.querySelector('#product_container .product_table tbody').replaceChildren();
+        LoadProduct()
+            .then(() => {
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+                EditProduct();
+                ViewProduct();
+                AddProduct();
+                DeleteProduct();
+                searchProduct();
+            })
+    })
+}
 
 
 // -------------------------- Main -----------------------------------//
 LoadProduct()
     .then(() => {
-        const table_headings = document.querySelectorAll('.product_table thead th');
-        const table_rows = document.querySelectorAll('.product_table tbody tr');
 
-        table_headings.forEach((head, i) => {
-            const table_rows = document.querySelectorAll('.product_table tbody tr');
-
-            let sort_asc = true;
-            head.onclick = () => {
-                table_headings.forEach(head => head.classList.remove('active'));
-                head.classList.add('active');
-
-                document.querySelectorAll('.product_table td').forEach(td => td.classList.remove('active'));
-                table_rows.forEach(row => {
-                    row.querySelectorAll('.product_table td')[i].classList.add('active');
-                })
-
-                head.classList.toggle('asc', sort_asc);
-                sort_asc = !head.classList.contains('asc');
-
-                sortTable(i, sort_asc);
-            }
-        })
-
-        function sortTable(column, sort_asc) {
-
-            [...table_rows].sort((a, b) => {
-                let first_row = a.querySelectorAll('.product_table td')[column].textContent.toLowerCase(),
-                    second_row = b.querySelectorAll('.product_table td')[column].textContent.toLowerCase();
-
-                return sort_asc ? (first_row < second_row ? 1 : -1) : (first_row < second_row ? -1 : 1);
-            })
-                .map(sorted_row => document.querySelector('.product_table tbody').appendChild(sorted_row));
-        }
-
-
-        searchTable();
         EditProduct();
         ViewProduct();
         AddProduct();
         DeleteProduct();
+        searchProduct();
     })
 
-
+ReLoadProduct();

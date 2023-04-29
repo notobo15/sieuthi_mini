@@ -5,7 +5,7 @@ function LoadOrder() {
         var xml = new XMLHttpRequest();
 
 
-        xml.open("GET", 'http://localhost:3000/api/user/order/list', true);
+        xml.open("GET", 'http://localhost:3001/api/user/order/list', true);
         xml.send();
         xml.onload = function () {
             let orders = JSON.parse(this.responseText);
@@ -55,7 +55,7 @@ function Approve() {
             status.innerHTML = 'approved';
 
             let xml = new XMLHttpRequest();
-            xml.open('POST', `http://localhost:3000/api/user/order/edit/${approve.value}`)
+            xml.open('POST', `http://localhost:3001/api/user/order/edit/${approve.value}`)
             xml.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             xml.send('status=Approved')
             xml.onload = function () {
@@ -73,7 +73,7 @@ function View() {
     views.forEach(view => {
         view.addEventListener('click', () => {
             let xml = new XMLHttpRequest();
-            xml.open('GET', `http://localhost:3000/api/user/order/${view.value}`)
+            xml.open('GET', `http://localhost:3001/api/user/order/${view.value}`)
             xml.send();
             xml.onload = function () {
                 let carts = JSON.parse(this.responseText);
@@ -143,7 +143,7 @@ function Delay() {
             status.innerHTML = 'delayed';
 
             let xml = new XMLHttpRequest();
-            xml.open('POST', `http://localhost:3000/api/user/order/edit/${delay.value}`)
+            xml.open('POST', `http://localhost:3001/api/user/order/edit/${delay.value}`)
             xml.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             xml.send('status=Delayed')
             xml.onload = function () {
@@ -155,22 +155,19 @@ function Delay() {
     }
 }
 
+function SearchOrder() {
+    const search = document.querySelector('#discount_container .input-group input'),
+        table_rows = document.querySelectorAll('.discount_table tbody tr');
+    // console.log(search.innerHTML);
 
-
-
-
-
-//---------------------------- Active functions -------------------------------------//
-
-LoadOrder()
-    .then(() => {
-        Approve();
-        View();
-        Delay();
-    })
-    .catch(() => {
-        console.log("fail load order to table!")
+    search.addEventListener('input', () => {
+        table_rows.forEach((row, i) => {
+            let table_data = row.textContent.toLowerCase(),
+                search_data = search.value.toLowerCase();
+            row.classList.toggle('hide', table_data.indexOf(search_data) < 0);
+        })
     });
+}
 
 function ReLoadOrder() {
     var reload = document.querySelector('#order_container .reload_order')
@@ -186,5 +183,21 @@ function ReLoadOrder() {
         });;
     })
 }
+
+
+//---------------------------- Active functions -------------------------------------//
+
+LoadOrder()
+    .then(() => {
+        Approve();
+        View();
+        Delay();
+        SearchOrder();
+    })
+    .catch(() => {
+        console.log("fail load order to table!")
+    });
+
+
 
 ReLoadOrder();

@@ -52,7 +52,7 @@ function EditCategory() {
 
             var data = edit.parentNode.parentNode.querySelectorAll('td');
             // console.log(data);
-            var html = document.createElement('div');
+            var html = document.createElement('form');
             html.id = "form_popup";
             html.innerHTML = `
                 <div class="close">&times;</div>
@@ -217,7 +217,7 @@ function DeleteCategory() {
 }
 
 
-function searchTable() {
+function SearchCategory() {
     const search = document.querySelector('#category_container .input-group input'),
         table_rows = document.querySelectorAll('.category_table tbody tr');
     // console.log(search.innerHTML);
@@ -230,23 +230,6 @@ function searchTable() {
         })
     });
 }
-
-
-
-
-
-//---------------------------- Active functions -------------------------------------//
-LoadCategory()
-    .then(() => {
-        console.log(`Load category table complete`);
-        EditCategory();
-        ViewCategory();
-        DeleteCategory();
-        searchTable();
-    })
-    .catch(() => {
-        console.log(`Load category table fail`)
-    });
 
 
 function ReLoadCategory() {
@@ -266,5 +249,22 @@ function ReLoadCategory() {
             });
     })
 }
+
+
+
+
+//---------------------------- Active functions -------------------------------------//
+LoadCategory()
+    .then(() => {
+        console.log(`Load category table complete`);
+        EditCategory();
+        ViewCategory();
+        DeleteCategory();
+        SearchCategory();
+    })
+    .catch(() => {
+        console.log(`Load category table fail`)
+    });
+
 
 ReLoadCategory();

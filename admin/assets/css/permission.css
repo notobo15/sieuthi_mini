@@ -14,7 +14,7 @@ Code written by:
     height: 80;
 } */
 
-main#order_container {
+main#permission_container {
 
     width: 100%;
     height: 100%;
@@ -28,7 +28,7 @@ main#order_container {
     overflow: hidden;
 }
 
-.order_header {
+.permission_header {
     /* width: 100%;
     height: 10%; */
 
@@ -42,7 +42,7 @@ main#order_container {
     align-items: center;
 }
 
-.order_header .input-group {
+.permission_header .input-group {
     width: 35%;
     height: 100%;
     background-color: #fff5;
@@ -56,18 +56,18 @@ main#order_container {
     transition: .2s;
 }
 
-.order_header .input-group:hover {
+.permission_header .input-group:hover {
     width: 45%;
     background-color: #fff8;
     box-shadow: 0 .1rem .4rem #0002;
 }
 
-.order_header .input-group img {
+.permission_header .input-group img {
     width: 1.2rem;
     height: 1.2rem;
 }
 
-.order_header .input-group input {
+.permission_header .input-group input {
     width: 100%;
     padding: 0 .5rem 0 .3rem;
     background-color: transparent;
@@ -75,7 +75,7 @@ main#order_container {
     outline: none;
 }
 
-.order_table {
+.permission_table {
     width: 95%;
     max-height: calc(95% - 1.6rem);
     background-color: rgba(143, 141, 141, 0.733);
@@ -85,55 +85,36 @@ main#order_container {
     overflow: overlay;
 }
 
-.order_table::-webkit-scrollbar {
+.permission_table::-webkit-scrollbar {
     width: 0.5rem;
     height: 0.5rem;
 }
 
-.order_table::-webkit-scrollbar-thumb {
+.permission_table::-webkit-scrollbar-thumb {
     border-radius: .5rem;
     background-color: #0004;
     visibility: hidden;
 }
 
-.order_table:hover::-webkit-scrollbar-thumb {
+.permission_table:hover::-webkit-scrollbar-thumb {
     visibility: visible;
 }
 
-.order_table table {
+.permission_table table {
     width: 100%;
+    
 }
 
 
-.order_table table,
-.order_table th,
-.order_table td {
+.permission_table table,
+.permission_table th,
+.permission_table td {
     border-collapse: collapse;
     padding: .8rem;
     text-align: center;
 }
 
-.order_table td:nth-child(1) {
-    width: 15%;
-}
-.order_table td:nth-child(2) {
-    width: 13%;
-}
-
-.order_table td:nth-child(3) {
-    width: 10%;
-}
-
-.order_table td:nth-child(4) {
-    width: 13%;
-}
-
-.order_table td:nth-child(5) {
-    width: 15%;
-}
-
-
-.order_table thead th {
+.permission_table thead th {
     position: sticky;
     top: 0;
     left: 0;
@@ -141,62 +122,42 @@ main#order_container {
     background-color: #353535fe;
     cursor: pointer;
     text-transform: capitalize;
-}
+}   
 
-.order_table tbody tr:nth-child(even) {
+.permission_table tbody tr:nth-child(even) {
     background-color: #6865650b;
 }
 
-.order_table tbody tr.hide {
+.permission_table tbody tr.hide {
     display: none;
 }
 
-.order_table tbody tr:hover {
+.permission_table tbody tr:hover {
     background-color: rgba(184, 181, 181, 0.4) !important;
 }
 
-
-
-/* .order_table tbody tr.hide td,
-.order_table tbody tr.hide td p {
-    
-    padding: 0;
-    font: 0 / 0 sans-serif;
-    transition: .2s ease-in-out .5s;
-} */
-/* 
-.order_table tbody tr.hide td img {
-    width: 0;
-    height: 0;
-    transition: .2s ease-in-out .5s;
-} */
-
-.order_table .status {
-    padding: .5rem 0;
-    border-radius: 2rem;
-    text-align: center;
+#permission_container .permission_table td:nth-child(1) {
+    width: 10%;
 }
-
-.order_table .status.processing {
-    background-color: #f32525;
-    color: #3b3b3b;
-    font-weight: bold;
+#permission_container .permission_table td:nth-child(2) {
+    width: 12%;
 }
-
-.order_table .status.approved {
-    background-color: #06f041;
-    color: #3b3b3b;
-    font-weight: bold;
+#permission_container .permission_table td:nth-child(3) {
+    width: 12%;
 }
-
-.order_table .status.delayed {
-    background-color: #686666;  
-    color: #c5c4c4;
-    font-weight: bold;
+#permission_container .permission_table td:nth-child(4) {
+    width: 13%;
+}
+#permission_container .permission_table td:nth-child(5) {
+    width: 13%;
 }
 
 
-#order_container .order_table td:nth-child(6) {
+#permission_container .permission_table td:nth-child(6) {
+    width: 13%;
+}
+
+#permission_container .permission_table td:nth-child(7) {
     width: 100%;
     height: 100%;
     display: flex;
@@ -206,48 +167,41 @@ main#order_container {
     gap: 8px;
 }
 
-#order_container .order_table button {
+#permission_container .permission_table button {
     cursor: pointer;
     border-radius: 8px;
     border: none;
     display: inline-block;
     box-shadow: 0 0.4rem .8rem #0005;
-    width: 25%;
+    width: 40%;
     height: 30px;
     color: rgb(0, 0, 0);
     white-space: pre-wrap;
 }
 
-#order_container .order_table .approve {
+#permission_container .permission_table .edit {
     background-color: rgb(29, 238, 39);
 }
 
-#order_container .order_table .view {
-    background-color: rgb(203, 206, 203);
-}
-
-#order_container .order_table .delay {
+#permission_container .permission_table .delete {
     background-color: rgb(226, 61, 39);
 }
 
-#order_container .order_table .approve:hover {
+#permission_container .permission_table .edit:hover {
     background-color: rgb(10, 189, 19);
 }
 
-#order_container .order_table .view:hover {
-    background-color: rgb(152, 153, 152);
-}
 
-#order_container .order_table .delay:hover {
+#permission_container .permission_table .delete:hover {
     background-color: rgb(180, 40, 22);
 }
 
 @media (max-width: 1000px) {
-    .order_table td:not(:first-of-type) {
+    .permission_table td:not(:first-of-type) {
         min-width: 12.1rem;
     }
 
-    #order_container .order_table td:nth-child(6) {
+    #permission_container .permission_table td:nth-child(7) {
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -255,7 +209,7 @@ main#order_container {
         gap: 5px;
     }
 
-    #order_container .order_table button {
+    #permission_container .permission_table button {
         cursor: pointer;
         border-radius: 10px;
         border: none;
@@ -267,7 +221,7 @@ main#order_container {
     }
 }
 
-.order_table thead th span.icon-arrow {
+.permission_table thead th span.icon-arrow {
     display: inline-block;
     width: 1.3rem;
     height: 1.3rem;
@@ -281,47 +235,62 @@ main#order_container {
     transition: .2s ease-in-out;
 }
 
-.order_table thead th:hover span.icon-arrow {
+.permission_table thead th:hover span.icon-arrow {
     border: 1.4px solid #11c3f0;
 }
 
-.order_table thead th:hover {
+.permission_table thead th:hover {
     color: #11c3f0;
 }
 
-.order_table thead th.active span.icon-arrow {
+.permission_table thead th.active span.icon-arrow {
     background-color: #6c00bd;
     color: #fff;
 }
 
-.order_table thead th.asc span.icon-arrow {
+.permission_table thead th.asc span.icon-arrow {
     transform: rotate(180deg);
 }
 
-.order_table thead th.active,
-.order_table tbody td.active {
+.permission_table thead th.active,
+.permission_table tbody td.active {
     color: #6c00bd;
 }
 
-.reload_order {
+.add_permission {
     position: relative;
 }
 
-.order_header .reload_order .reload_order_btn {
+.permission_header .add_permission .add_permission_btn {
     display: inline-block;
-    width: 2.5rem;
-    height: 2.5rem;
-    background: #fff6 url(../imgs/reload.jpg) center / 125% no-repeat;
+    width: 3rem;
+    height: 3rem;
+    background: #fff6 url(../imgs/sm_5afbe35ff3ec9.jpg) center / 100% no-repeat;
     border-radius: 50%;
     transition: .2s ease-in-out;
 }
 
-.order_header .reload_order .reload_order_btn:hover {
-    background-color: #e2caca;
+.permission_header .add_permission .add_permission_btn:hover {
+    background-color: #fff6;
     transform: scale(1.15);
     cursor: pointer;
 }
 
-.reload_order input {
+.permission_header .add_permission .reload_permission_btn {
+    display: inline-block;
+    width: 3rem;
+    height: 3rem;
+    background: #fff6 url(../imgs/reload.jpg) center / 150% no-repeat;
+    border-radius: 50%;
+    transition: .2s ease-in-out;
+}
+
+.permission_header .add_permission .reload_permission_btn:hover {
+    background-color: #fff6;
+    transform: scale(1.15);
+    cursor: pointer;
+}
+
+.add_permission input {
     display: none;
 }

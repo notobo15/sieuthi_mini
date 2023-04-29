@@ -1,7 +1,5 @@
 
-// ------------------------ Global ----------------------------//
 
-var user_length;
 
 // ------------------------ Load user table ------------------------ //
 
@@ -11,32 +9,30 @@ function LoadAccount() {
         xhttp.onload = function () {
             var datas = JSON.parse(this.responseText);
             // console.log(JSON.parse (this.responseText)[2].user_id);
-            user_length = datas.length
+
             var html = ``;
             datas.forEach(data => {
-                
-    
                 html += `<tr><td>${data.id}</td>
                     <td>${data.account_id}</td>
                     <td>${data.first_name + data.last_name}</td>
                     <td>${data.phone}</td>
                     <td>${data.delivery_address}</td>
                     <td>${data.gender}</td>
-                    <td>${data.group_id }</td>
+                    <td>${data.group_id}</td>
                     <td class="user_setting">
                             <button class="user_edit" value="${data.id}"><i class="fa-solid fa-hammer"></i></button>
                             <button class="user_delete" value="${data.id}"><i class="fa-solid fa-trash"></i></button>
                     </td>
                     </tr>`
             });
-    
+
             document.querySelector('#user_table table tbody').innerHTML = html;
             resolve();
         }
-        xhttp.open("GET", `http://localhost/sieuthi_mini_api_php/api/accounts/list.php`, false);
+        xhttp.open("GET", `http://localhost/sieuthi_mini_api_php/api/accounts/list.php`, true);
         xhttp.send();
     })
-   
+
 }
 
 
@@ -48,15 +44,33 @@ function EditAccount() {
     for (const edit of edits) {
         edit.addEventListener('click', () => {
 
+            // -------------------------------- Get all group id (permission) -----------------------------//
+            // var groups;
+            // let xhr = new XMLHttpRequest();
+            // xhr.open("GET", `http://localhost/sieuthi_mini_api_php/api/groups/list.php`,false);
+            // xhr.send();
+            // xhr.onload = () => {
+            //     groups = JSON.parse(xhr.responseText);
+            // }
+            // var opts = ``;
+            // for (const group of groups) {
+            //     opts += ` <option value="${group.id}">${group.name}</option>`
+            // }
+            // <div class="form_ele">
+            //             <label for="group_id">Role</label>
+            //             <select name="group_id" id="group_id" class="" > 
+            //                 ${opts}
+            //             </select>
+            // </div>
+
+            // -------------------------------- Show form pop up -----------------------------//
             const doc = document.querySelector('.main');
             if (doc.querySelector('#form_popup') !== null) {
                 var rm = doc.querySelector('#form_popup');
                 doc.removeChild(rm);
             }
-            
 
-
-            var xml = new XMLHttpRequest();
+            let xml = new XMLHttpRequest();
             xml.open("GET", `http://localhost/sieuthi_mini_api_php/api/accounts/detail.php?id=${edit.value}`);
             xml.send();
             xml.onload = function () {
@@ -66,7 +80,7 @@ function EditAccount() {
                 html.id = "form_popup";
                 html.innerHTML = `
                 <div class="close">&times;</div>
-                <form class="form_profile">
+                <div class="form_profile">
                     <div class="form_ele">
                         <label for="id">Id</label>
                         <input type="text" name="id" id="" value="${data.id}">
@@ -95,16 +109,15 @@ function EditAccount() {
                         <label for="gender">gender</label>
                         <input type="text" name="gender" id="" value="${data.gender}">
                     </div>
-                   
-                
+                    
                     <div class="form_footer">
                         <button class="save" disabled style="pointer-events: none" type="submit">Save</button>
                         <Button class="cancel">Cancel</Button>
                     </div>
-                </form>  
+                </div>  
                 `;
-                // ---------------------------- Set selected ---------------------------------------/
-                html.querySelector('#category_id').value = data.category_id;
+                // ---------------------------- Set selected role ---------------------------------------/
+                // html.querySelector('#group_id').value = data.group_id;
 
                 // ---------------------------- Show form popup ---------------------------------------/
                 document.querySelector('.main').appendChild(html);
@@ -158,19 +171,6 @@ function EditAccount() {
                         .then(res => console.log(res))
                         .catch(err => console.log(err))
                 })
-                // ---------------------------- update image preview -------------------------------------------------//
-                let img = html.querySelector('#img');
-                let tartget = html.querySelector('#main-img')
-                img.onchange = () => {
-                    let file = img.files[0];
-                    let reader = new FileReader();
-                    reader.readAsDataURL(file);
-                    reader.onload = function () {
-                        // can also use "this.result"
-                        tartget.src = reader.result;
-                    }
-                }
-
             }
 
         })
@@ -179,7 +179,29 @@ function EditAccount() {
 // ------------------------ Delete user ------------------------ //
 
 
-function search() {
+function DeleteAccount() {
+    var deletes = document.querySelectorAll('#user_container .user_delete');
+    for (const del of deletes) {
+        del.addEventListener('click', () => {
+            let row = del.parentNode.parentNode;
+            var confirm = window.confirm(`Do you want to delete: ${row.children[1].textContent} ??`);
+            if (confirm) {
+                row.parentNode.removeChild(row);
+                let xml = new XMLHttpRequest();
+                xml.open('GET', `http://localhost/sieuthi_mini_api_php/api/accounts/delete.php?id=${del.value}`);
+                xml.send()
+                xml.onload = () => {
+                    console.log(xml.response);
+                }
+            }
+        })
+    }
+}
+
+
+// ------------------------ Search user ------------------------ //
+
+function SearchAccount() {
     var users = document.querySelectorAll('#user_table table tbody tr'),
         search_user = document.getElementById('search_user');
 
@@ -200,6 +222,22 @@ function search() {
 // ------------------------ Active Function -------------------------------
 
 LoadAccount()
+    .then(() => {
+        EditAccount()
+        SearchAccount();
+        DeleteAccount();
+    })
+
+
+function ReloadAccount() {
+    let reload = document.querySelector('#user_container .user_reload')
+    reload.addEventListener('click', () => {
+        LoadAccount()
             .then(() => {
                 EditAccount()
-            })
+                search();
+                DeleteAccount();
+            });
+    })
+}
+ReloadAccount();
